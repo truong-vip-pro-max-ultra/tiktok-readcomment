@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>WEB PHIM SÉC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+    <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
+        <h1 class="text-3xl font-bold mb-6 text-pink-400">WEB PHIM SÉC</h1>
+
+        <label for="username" class="block text-left text-sm mb-2">Nhập TikTok username (không có @):</label>
+        <input type="text" id="username" class="w-full px-4 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="ví dụ: nguyenvana" />
+
+        <button id="startButton" onclick="startClient()"
+                class="mt-4 w-full bg-pink-500 hover:bg-pink-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">
+            Xem sếch ngay!
+        </button>
+
+        <h2 class="text-xl font-semibold mt-8 text-pink-300">Danh sách comment:</h2>
+        <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>
+
+        <audio id="player" controls autoplay hidden></audio>
+    </div>
+
+    <script>
+        let currentComment = "";
+        let username = "";
+        let intervalId = null;
+
+        async function startClient() {
+            const button = document.getElementById("startButton");
+            button.innerText = "Đang xem sếch...";
+            button.disabled = true;
+            button.classList.add("opacity-50", "cursor-not-allowed");
+
+            username = document.getElementById("username").value.trim();
+            if (!username) {
+                alert("Vui lòng nhập username");
+                button.innerText = "Xem sếch ngay!";
+                button.disabled = false;
+                button.classList.remove("opacity-50", "cursor-not-allowed");
+                return;
+            }
+
+            await fetch("/start", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username })
+            });
+
+            // Bắt đầu lấy comment nếu chưa chạy
+            if (!intervalId) {
+                intervalId = setInterval(fetchComment, 5000);
+            }
+        }
+
+        async function fetchComment() {
+            const res = await fetch(`/comment/${username}`);
+            const data = await res.json();
+            if (data.latest_comment && data.latest_comment !== currentComment) {
+                currentComment = data.latest_comment;
+
+                const commentBox = document.getElementById("comment");
+                commentBox.innerText += currentComment + '\n';
+
+                // Tự động scroll xuống cuối
+                commentBox.scrollTop = commentBox.scrollHeight;
+
+                const audio = document.getElementById("player");
+                audio.src = `/audio/${username}?t=${Date.now()}`;
+                audio.play().catch(err => console.error("Không thể phát âm thanh:", err));
+            }
+        }
+    </script>
+</body>
+</html>
