@@ -42,7 +42,7 @@ def get_comment(username):
 def get_audio(username):
     mp3_path = os.path.join(audio_dir, f"{username}.mp3")
     if os.path.exists(mp3_path):
-        change_speed(mp3_path,mp3_path, 1.5)
+        change_speed(mp3_path,mp3_path, 1.3)
         return send_file(mp3_path, mimetype="audio/mpeg")
     return jsonify({"error": "No audio found"}), 404
 

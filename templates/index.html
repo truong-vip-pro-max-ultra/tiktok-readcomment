@@ -26,7 +26,6 @@
     <script>
         let currentComment = "";
         let username = "";
-        let intervalId = null;
 
         async function startClient() {
             const button = document.getElementById("startButton");
@@ -43,35 +42,59 @@
                 return;
             }
 
+            // Gửi request bắt đầu
             await fetch("/start", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username })
             });
 
-            // Bắt đầu lấy comment nếu chưa chạy
-            if (!intervalId) {
-                intervalId = setInterval(fetchComment, 5000);
+            // Xử lý audio "dọn đường" cho mobile
+            const audio = document.getElementById("player");
+            try {
+                audio.src = ""; // Làm sạch
+                await audio.play();
+                audio.pause();
+                audio.currentTime = 0;
+                console.log("Audio unlocked bởi người dùng.");
+            } catch (err) {
+                console.warn("Trình duyệt không cho phép phát audio tự động:", err);
             }
+
+            // Gọi lần đầu
+            fetchComment();
         }
 
         async function fetchComment() {
-            const res = await fetch(`/comment/${username}`);
-            const data = await res.json();
-            if (data.latest_comment && data.latest_comment !== currentComment) {
-                currentComment = data.latest_comment;
+            try {
+                const res = await fetch(`/comment/${username}`);
+                const data = await res.json();
+                if (data.latest_comment && data.latest_comment !== currentComment) {
+                    currentComment = data.latest_comment;
 
-                const commentBox = document.getElementById("comment");
-                commentBox.innerText += currentComment + '\n';
+                    const commentBox = document.getElementById("comment");
+                    commentBox.innerText += currentComment + '\n';
+                    commentBox.scrollTop = commentBox.scrollHeight;
 
-                // Tự động scroll xuống cuối
-                commentBox.scrollTop = commentBox.scrollHeight;
+                    const audio = document.getElementById("player");
+                    audio.src = `/audio/${username}?t=${Date.now()}`;
 
-                const audio = document.getElementById("player");
-                audio.src = `/audio/${username}?t=${Date.now()}`;
-                audio.play().catch(err => console.error("Không thể phát âm thanh:", err));
+                    audio.onended = () => {
+                        fetchComment();
+                    };
+
+                    await audio.play();
+                } else {
+                    // Nếu không có comment mới thì chờ 2s rồi thử lại
+                    setTimeout(fetchComment, 1000);
+                }
+            } catch (err) {
+                console.error("Lỗi khi fetch comment hoặc phát audio:", err);
+                setTimeout(fetchComment, 5000);
             }
         }
     </script>
+
+
 </body>
 </html>
