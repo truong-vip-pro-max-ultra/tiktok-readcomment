@@ -7,6 +7,11 @@
     </head>
     <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
         <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
+            <button id="startButton" onclick="window.location.href='/youtube'"
+                    class="mt-4 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold mb-10 py-2 px-4 rounded-lg shadow-md">
+                Phiên bản Youtube
+            </button>
+
             <h1 class="text-3xl font-bold mb-6 text-pink-400">WEB PHIM SÉC</h1>
 
             <label for="username" class="block text-left text-sm mb-2">Nhập TikTok username (không có @):</label>
@@ -43,7 +48,7 @@
                 }
 
                 // Gửi request bắt đầu
-                await fetch("/start", {
+                await fetch("/tiktok/start", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username })
@@ -74,7 +79,7 @@
 
             async function fetchComment() {
                 try {
-                    const res = await fetch(`/comment/${username}`);
+                    const res = await fetch(`/tiktok/comment/${username}`);
                     const data = await res.json();
 
                     if (data.latest_comment && data.latest_comment !== currentComment) {
@@ -85,7 +90,7 @@
                         commentBox.scrollTop = commentBox.scrollHeight;
 
                         const audio = document.getElementById("player");
-                        audio.src = `/audio/${username}?t=${Date.now()}`;
+                        audio.src = `/tiktok/audio/${username}?t=${Date.now()}`;
                         audio.load();
 
                         await waitForAudioLoad(audio);
