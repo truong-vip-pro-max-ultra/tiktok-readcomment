@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3cbe4ad5-0e41-4257-929a-9ba6244808c2" name="Changes" comment="add" />
+    <list default="true" id="3cbe4ad5-0e41-4257-929a-9ba6244808c2" name="Changes" comment="add">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/tiktok.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tiktok.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,7 +54,7 @@
     "Python.read_comment_live_fb_yt_tiktok.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/truongjae/Desktop/win/HOCTAP/Python/python-promax-main/postapi/tiktoktestapi/read_comment_live_fb_yt_tiktok",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -103,7 +107,8 @@
       <updated>1747420299844</updated>
       <workItem from="1747420300899" duration="8831000" />
       <workItem from="1747429262779" duration="38000" />
-      <workItem from="1747463144688" duration="3801000" />
+      <workItem from="1747463144688" duration="3892000" />
+      <workItem from="1747467059183" duration="220000" />
     </task>
     <task id="LOCAL-00001" summary="add">
       <option name="closed" value="true" />

@@ -13,8 +13,6 @@ audio_dir_youtube = "audio_files_youtube"
 os.makedirs(audio_dir_tiktok, exist_ok=True)
 os.makedirs(audio_dir_youtube, exist_ok=True)
 
-
-
 @app.route("/")
 def index():
     return render_template("tiktok.html")
