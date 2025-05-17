@@ -108,6 +108,7 @@
                             const audio = new Audio(audioUrl);
 
                             audio.load();
+                            audio.playbackRate = 1.5;
 
                             await waitForAudioLoad(audio);
                             audio.onended = () => {
