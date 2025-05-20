@@ -63,8 +63,6 @@ def get_comment(username):
 
     if reply:
         enable_likes[username] = False
-    else:
-        enable_likes[username] = True
 
     has_new_comment = False
     comment = get_latest_comment(username)
