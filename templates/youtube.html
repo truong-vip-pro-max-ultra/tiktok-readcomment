@@ -125,12 +125,23 @@
                 fetchComment();
             }
 
+            {#function waitForAudioLoad(audio) {#}
+            {#    return new Promise((resolve, reject) => {#}
+            {#        audio.oncanplaythrough = resolve;#}
+            {#        audio.onerror = reject;#}
+            {#    });#}
+
             function waitForAudioLoad(audio) {
                 return new Promise((resolve, reject) => {
-                    audio.oncanplaythrough = resolve;
-                    audio.onerror = reject;
+                    if (audio.readyState >= 3) {
+                        resolve();
+                    } else {
+                        audio.oncanplaythrough = resolve;
+                        audio.onerror = reject;
+                    }
                 });
             }
+
 
             async function fetchComment() {
                 try {
@@ -148,8 +159,6 @@
                         commentBox.innerText += currentComment + '\n';
                         commentBox.scrollTop = commentBox.scrollHeight;
 
-                        const audio = document.getElementById("player");
-                        {#audio.src = `/youtube/audio/${username}?t=${Date.now()}`;#}
                         const response = await fetch("/youtube/audio", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -168,7 +177,14 @@
                             audio.onended = () => {
                                 fetchComment();
                             };
-                            await audio.play();
+                            {#await audio.play();#}
+                            try {
+                                await audio.play();
+                            } catch (e) {
+                                console.warn("Phát audio thất bại:", e);
+                                setTimeout(fetchComment, 1000);
+                                return;
+                            }
                         } else {
                             console.error("Failed to fetch audio");
                             setTimeout(fetchComment, 1000);
