@@ -132,51 +132,52 @@
                 });
 
 
-            async function fetchComment() {
-                try {
-                    const res = await fetch("/youtube/comment", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ username })
-                    });
-                    const data = await res.json();
-
-                    if (data.latest_comment && data.latest_comment !== currentComment) {
-                        currentComment = data.latest_comment;
-
-                        const commentBox = document.getElementById("comment");
-                        commentBox.innerText += currentComment + '\n';
-                        commentBox.scrollTop = commentBox.scrollHeight;
-
-                        const response = await fetch("/youtube/audio", {
+                async function fetchComment() {
+                    try {
+                        const res = await fetch("/youtube/comment", {
                             method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ username })
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({username})
                         });
+                        const data = await res.json();
 
-                        if (response.ok) {
-                            const audioBlob = await response.blob();
-                            const audioUrl = URL.createObjectURL(audioBlob);
-                            const audio = new Audio(audioUrl);
+                        if (data.latest_comment && data.latest_comment !== currentComment) {
+                            currentComment = data.latest_comment;
 
-                            audio.load();
-                            await waitForAudioLoad(audio);
-                            audio.onended = () => {
-                                fetchComment();
-                            };
-                            audio.playbackRate = 1.5;
+                            const commentBox = document.getElementById("comment");
+                            commentBox.innerText += currentComment + '\n';
+                            commentBox.scrollTop = commentBox.scrollHeight;
 
-                            await audio.play();
+                            const response = await fetch("/youtube/audio", {
+                                method: "POST",
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({username})
+                            });
+
+                            if (response.ok) {
+                                const audioBlob = await response.blob();
+                                const audioUrl = URL.createObjectURL(audioBlob);
+                                const audio = new Audio(audioUrl);
+
+                                audio.load();
+                                await waitForAudioLoad(audio);
+                                audio.onended = () => {
+                                    fetchComment();
+                                };
+                                audio.playbackRate = 1.5;
+
+                                await audio.play();
+                            } else {
+                                console.error("Failed to fetch audio");
+                                setTimeout(fetchComment, 1000);
+                            }
                         } else {
-                            console.error("Failed to fetch audio");
                             setTimeout(fetchComment, 1000);
                         }
-                    } else {
+                    } catch (err) {
+                        console.error("Lỗi khi fetch hoặc phát audio:", err);
                         setTimeout(fetchComment, 1000);
                     }
-                } catch (err) {
-                    console.error("Lỗi khi fetch hoặc phát audio:", err);
-                    setTimeout(fetchComment, 1000);
                 }
             }
 
