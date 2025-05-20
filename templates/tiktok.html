@@ -1,0 +1,274 @@
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Đọc comment livestream TikTok</title>
+        <link rel="icon" type="image/png" href="https://cdn4.iconfinder.com/data/icons/remains/100/facebook_live_icon-2-512.png">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5742059082599160"
+     crossorigin="anonymous"></script>
+    </head>
+     <style>
+      /* Gradient động */
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .btn-modern {
+        background: linear-gradient(270deg, #4203e6, #d5015a, #ecb508, #238f00);
+        background-size: 600% 600%;
+        animation: gradientShift 8s ease infinite;
+        box-shadow:
+          0 0 8px #f43f5e,
+          0 0 20px #ec4899;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .btn-modern:hover {
+        transform: scale(1.05);
+        box-shadow:
+          0 0 10px #f43f5e,
+          0 0 20px #ec4899,
+          0 0 30px #fb7185;
+      }
+
+      .btn-modern i {
+        transition: transform 0.3s ease;
+      }
+
+      .btn-modern:hover i {
+        transform: translateX(6px) scale(1.2);
+      }
+
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradientShift 4s ease infinite;
+      }
+    </style>
+
+    <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+        <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
+
+        <h1 class="text-3xl font-extrabold mb-8 bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400
+                   bg-clip-text text-transparent drop-shadow-lg animate-gradient">
+          ĐỌC COMMENT LIVESTREAM TIKTOK
+        </h1>
+
+        <label for="username" class="block text-left text-sm mb-2">Nhập TikTok username (không có @):</label>
+        <input type="text" id="username" class="w-full px-4 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="ví dụ: nguyenvana" />
+
+
+        <div class="bg-gray-800 mt-5 p-6 rounded-xl shadow-md border border-gray-600 hover:border-sky-400 transition-all duration-300">
+          <div class="grid grid-cols-2 gap-6">
+            <!-- Reply -->
+            <div class="flex items-center justify-between">
+              <label for="enableReply" class="text-white text-sm flex items-center gap-2">
+                <i class="fas fa-reply text-sky-400"></i>Tự động trả lời comment
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="enableReply" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-lime-500 transition-all duration-300"></div>
+                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-full"></div>
+              </label>
+            </div>
+
+            <!-- Like -->
+            <div class="flex items-center justify-between">
+              <label for="enableLike" class="text-white text-sm flex items-center gap-2">
+                <i class="fas fa-heart text-red-400"></i> Cảm ơn thả tim
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="enableLike" class="sr-only peer" checked>
+                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-purple-500 transition-all duration-300"></div>
+                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-full"></div>
+              </label>
+            </div>
+
+            <!-- Comment -->
+            <div class="flex items-center justify-between">
+              <label for="enableCmt" class="text-white text-sm flex items-center gap-2">
+                <i class="fas fa-comment-dots text-pink-400"></i> Đọc comment
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="enableCmt" class="sr-only peer" checked>
+                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-pink-500 transition-all duration-300"></div>
+                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-full"></div>
+              </label>
+            </div>
+
+            <!-- Gift -->
+            <div class="flex items-center justify-between">
+              <label for="enableGift" class="text-white text-sm flex items-center gap-2">
+                <i class="fas fa-gift text-yellow-400"></i> Cảm ơn tặng quà
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="enableGift" class="sr-only peer" checked>
+                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-sky-400 transition-all duration-300"></div>
+                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-full"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+        <button id="startButton" onclick="startClient()" class="btn-modern mt-6 w-full text-white font-bold py-3 px-6 rounded-2xl flex items-center justify-center gap-3 select-none shadow-lg relative overflow-hidden">
+          <i class="fas fa-rocket"></i>
+          Start
+        </button>
+
+        <h2 class="text-xl font-semibold mt-8 text-pink-300">Danh sách comment</h2>
+        <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>
+
+        <audio id="player" controls autoplay hidden></audio>
+
+        <button id="yt" onclick="window.location.href='/youtube'"
+                class="mt-10 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">
+            Phiên bản Youtube
+        </button>
+
+        </div>
+
+        <script>
+            let currentComment = "";
+            let username = "";
+
+            async function startClient() {
+                const button = document.getElementById("startButton");
+                username = document.getElementById("username").value.trim();
+                if (!username) {
+                    alert("Vui lòng nhập username");
+                    button.innerText = "Start";
+                    button.disabled = false;
+                    button.classList.remove("opacity-50", "cursor-not-allowed");
+                    return;
+                }
+
+                try {
+                    button.innerText = "Đang kiểm tra...";
+                    button.disabled = true;
+                    button.classList.add("opacity-50", "cursor-not-allowed");
+
+                    const check_live = await fetch(`/tiktok/check/${username}`);
+                    if (check_live.status === 400) {
+                        button.innerText = "Start";
+                        button.disabled = false;
+                        button.classList.remove("opacity-50", "cursor-not-allowed");
+                        alert(`${username} không đúng hoặc không livestream`);
+                        return;
+                    } else if (!check_live.ok) {
+                        button.innerText = "Start";
+                        button.disabled = false;
+                        button.classList.remove("opacity-50", "cursor-not-allowed");
+                        alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+                        return;
+                    } else {
+                        console.log("Start thành công");
+                    }
+                } catch (error) {
+                    console.error("Lỗi khi gửi request:", error);
+                    alert("Không thể kết nối tới server.");
+                }
+
+                // Gửi request bắt đầu
+                await fetch("/tiktok/start", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username })
+                });
+
+                // Xử lý audio "dọn đường" cho mobile
+                const audio = document.getElementById("player");
+                try {
+                    audio.src = ""; // Làm sạch
+                    await audio.play();
+                    audio.pause();
+                    audio.currentTime = 0;
+                    console.log("Audio unlocked bởi người dùng.");
+                } catch (err) {
+                    console.warn("Trình duyệt không cho phép phát audio tự động:", err);
+                }
+
+
+                button.innerText = "Đang Đọc...";
+                button.disabled = true;
+                button.classList.add("opacity-50", "cursor-not-allowed");
+                // Gọi lần đầu
+                fetchComment();
+            }
+
+            function waitForAudioLoad(audio) {
+                return new Promise((resolve, reject) => {
+                    audio.oncanplaythrough = resolve;
+                    audio.onerror = reject;
+                });
+            }
+
+            async function fetchComment() {
+                try {
+                    /*const enableReply = document.getElementById('enableReply');
+
+                    const res = await fetch(`/tiktok/comment/${username}?reply=${enableReply.checked}`);*/
+
+                    const formData = new FormData();
+
+                    if (document.getElementById("enableReply").checked) {
+                        formData.append("reply", "1");
+                    }
+                    if (document.getElementById("enableLike").checked) {
+                        formData.append("like", "1");
+                    }
+                    if (document.getElementById("enableCmt").checked) {
+                        formData.append("cmt", "1");
+                    }
+                    if (document.getElementById("enableGift").checked) {
+                        formData.append("gift", "1");
+                    }
+
+                    const res = await fetch(`/tiktok/comment/${username}`, {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await res.json();
+
+                    if (data.latest_comment && data.latest_comment !== currentComment) {
+                        currentComment = data.latest_comment;
+
+                        const commentBox = document.getElementById("comment");
+                        commentBox.innerText += currentComment + '\n';
+                        commentBox.scrollTop = commentBox.scrollHeight;
+
+                        const audio = document.getElementById("player");
+                        audio.src = `/tiktok/audio/${username}?t=${Date.now()}`;
+                        audio.load();
+                        audio.playbackRate = 1.5;
+
+                        await waitForAudioLoad(audio);
+                        audio.onended = () => {
+                            fetchComment();
+                        };
+                        await audio.play();
+                    } else {
+                        setTimeout(fetchComment, 1000);
+                    }
+                } catch (err) {
+                    console.error("Lỗi khi fetch hoặc phát audio:", err);
+                    setTimeout(fetchComment, 1000);
+                }
+            }
+
+        </script>
+
+
+    </body>
+    </html>
