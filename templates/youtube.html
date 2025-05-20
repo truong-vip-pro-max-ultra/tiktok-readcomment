@@ -125,22 +125,11 @@
                 fetchComment();
             }
 
-            {#function waitForAudioLoad(audio) {#}
-            {#    return new Promise((resolve, reject) => {#}
-            {#        audio.oncanplaythrough = resolve;#}
-            {#        audio.onerror = reject;#}
-            {#    });#}
-
             function waitForAudioLoad(audio) {
                 return new Promise((resolve, reject) => {
-                    if (audio.readyState >= 3) {
-                        resolve();
-                    } else {
-                        audio.oncanplaythrough = resolve;
-                        audio.onerror = reject;
-                    }
+                    audio.oncanplaythrough = resolve;
+                    audio.onerror = reject;
                 });
-            }
 
 
             async function fetchComment() {
@@ -171,20 +160,13 @@
                             const audio = new Audio(audioUrl);
 
                             audio.load();
-                            audio.playbackRate = 1.5;
-
                             await waitForAudioLoad(audio);
                             audio.onended = () => {
                                 fetchComment();
                             };
-                            {#await audio.play();#}
-                            try {
-                                await audio.play();
-                            } catch (e) {
-                                console.warn("Phát audio thất bại:", e);
-                                setTimeout(fetchComment, 1000);
-                                return;
-                            }
+                            audio.playbackRate = 1.5;
+
+                            await audio.play();
                         } else {
                             console.error("Failed to fetch audio");
                             setTimeout(fetchComment, 1000);
