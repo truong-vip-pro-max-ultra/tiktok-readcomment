@@ -130,6 +130,7 @@
                     audio.oncanplaythrough = resolve;
                     audio.onerror = reject;
                 });
+            }
 
 
                 async function fetchComment() {
@@ -178,7 +179,6 @@
                         console.error("Lỗi khi fetch hoặc phát audio:", err);
                         setTimeout(fetchComment, 1000);
                     }
-                }
             }
 
         </script>
