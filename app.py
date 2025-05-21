@@ -31,6 +31,8 @@ ALLOWED_ORIGINS = ['https://livestreamvoice.com']
 
 @app.before_request
 def block_external_requests():
+    if request.path == '/' or request.path == '/youtube':
+        return
     origin = request.headers.get('Origin')
     referer = request.headers.get('Referer')
 
