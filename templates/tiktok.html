@@ -318,62 +318,62 @@
 
 
                         {# create music wave #}
-
-                        if (!audioContext) {
-                            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                            audioSource = audioContext.createMediaElementSource(audio);
-                            analyzer = audioContext.createAnalyser();
-
-                            audioSource.connect(analyzer);
-                            analyzer.connect(audioContext.destination);
-
-                            analyzer.fftSize = 256;
-                        }
-
-                        const canvas = document.getElementById('musicWave');
-                        const ctx = canvas.getContext('2d');
-
-                        function resizeCanvas() {
-                          canvas.width = canvas.offsetWidth;
-                          canvas.height = canvas.offsetHeight;
-                        }
-
-                        resizeCanvas();
-                        window.addEventListener('resize', resizeCanvas);
-
-                        audioSource.connect(analyzer);
-                        analyzer.connect(audioContext.destination);
-
-                        analyzer.fftSize = 256;
-                        const bufferLength = analyzer.frequencyBinCount;
-                        const dataArray = new Uint8Array(bufferLength);
-
-                        function draw() {
-                          requestAnimationFrame(draw);
-
-                          analyzer.getByteFrequencyData(dataArray);
-
-                          ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                          const barWidth = (canvas.width / bufferLength) * 2.5;
-                          let barHeight;
-                          let x = 0;
-
-                          for (let i = 0; i < bufferLength; i++) {
-                            barHeight = dataArray[i];
-                            ctx.fillStyle = `rgb(${barHeight+100},50,200)`;
-                            ctx.fillRect(x, canvas.height - barHeight / 3, barWidth, barHeight / 3);
-                            x += barWidth + 1;
-                          }
-                        }
-
-                         audio.onplay = () => {
-                          if (audioContext.state === 'suspended') {
-                            audioContext.resume();
-                          }
-                          draw();
-                        };
-
+{##}
+{#                        if (!audioContext) {#}
+{#                            audioContext = new (window.AudioContext || window.webkitAudioContext)();#}
+{#                            audioSource = audioContext.createMediaElementSource(audio);#}
+{#                            analyzer = audioContext.createAnalyser();#}
+{##}
+{#                            audioSource.connect(analyzer);#}
+{#                            analyzer.connect(audioContext.destination);#}
+{##}
+{#                            analyzer.fftSize = 256;#}
+{#                        }#}
+{##}
+{#                        const canvas = document.getElementById('musicWave');#}
+{#                        const ctx = canvas.getContext('2d');#}
+{##}
+{#                        function resizeCanvas() {#}
+{#                          canvas.width = canvas.offsetWidth;#}
+{#                          canvas.height = canvas.offsetHeight;#}
+{#                        }#}
+{##}
+{#                        resizeCanvas();#}
+{#                        window.addEventListener('resize', resizeCanvas);#}
+{##}
+{#                        audioSource.connect(analyzer);#}
+{#                        analyzer.connect(audioContext.destination);#}
+{##}
+{#                        analyzer.fftSize = 256;#}
+{#                        const bufferLength = analyzer.frequencyBinCount;#}
+{#                        const dataArray = new Uint8Array(bufferLength);#}
+{##}
+{#                        function draw() {#}
+{#                          requestAnimationFrame(draw);#}
+{##}
+{#                          analyzer.getByteFrequencyData(dataArray);#}
+{##}
+{#                          ctx.clearRect(0, 0, canvas.width, canvas.height);#}
+{##}
+{#                          const barWidth = (canvas.width / bufferLength) * 2.5;#}
+{#                          let barHeight;#}
+{#                          let x = 0;#}
+{##}
+{#                          for (let i = 0; i < bufferLength; i++) {#}
+{#                            barHeight = dataArray[i];#}
+{#                            ctx.fillStyle = `rgb(${barHeight+100},50,200)`;#}
+{#                            ctx.fillRect(x, canvas.height - barHeight / 3, barWidth, barHeight / 3);#}
+{#                            x += barWidth + 1;#}
+{#                          }#}
+{#                        }#}
+{##}
+{#                         audio.onplay = () => {#}
+{#                          if (audioContext.state === 'suspended') {#}
+{#                            audioContext.resume();#}
+{#                          }#}
+{#                          draw();#}
+{#                        };#}
+{##}
                         {# end music wave #}
 
                         await waitForAudioLoad(audio);
