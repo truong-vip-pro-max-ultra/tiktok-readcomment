@@ -65,7 +65,7 @@
       .btn-modern {
         background: linear-gradient(270deg, #4203e6, #d5015a, #ecb508, #238f00);
         background-size: 600% 600%;
-        animation: gradientShift 8s ease infinite;
+        animation: gradientShift 5s ease infinite;
         box-shadow:
           0 0 8px #f43f5e,
           0 0 20px #ec4899;
@@ -95,7 +95,7 @@
 
       .animate-gradient {
         background-size: 200% 200%;
-        animation: gradientShift 4s ease infinite;
+        animation: gradientShift 3s ease infinite;
       }
     </style>
 
@@ -139,7 +139,7 @@
 
                 username = document.getElementById("username").value.trim();
                 if (!username) {
-                    alert("Vui lòng nhập link");
+                    showError("Vui lòng nhập link");
                     button.innerText = "Start";
                     button.disabled = false;
                     button.classList.remove("opacity-50", "cursor-not-allowed");
@@ -246,6 +246,53 @@
             spacing: 15.00
           });
         </script>
+
+
+    <div id="errorPopup" class="fixed top-4 right-4 z-50 hidden bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg animate-slide-in flex items-center gap-3">
+      <i class="fas fa-exclamation-circle text-white text-xl"></i>
+      <span id="errorMessage" class="flex-1">Lỗi xảy ra</span>
+      <button onclick="hideError()" class="ml-4 text-white hover:text-yellow-200 focus:outline-none">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <style>
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .animate-slide-in {
+        animation: slideIn 0.4s ease-out;
+      }
+    </style>
+
+    <script>
+      function showError(message) {
+        const popup = document.getElementById("errorPopup");
+        const msg = document.getElementById("errorMessage");
+
+        msg.innerText = message;
+        popup.classList.remove("hidden");
+
+        // Tự ẩn sau 4 giây
+        clearTimeout(window.errorTimeout);
+        window.errorTimeout = setTimeout(() => {
+          hideError();
+        }, 4000);
+      }
+
+      function hideError() {
+        const popup = document.getElementById("errorPopup");
+        popup.classList.add("hidden");
+      }
+
+    </script>
 
     </body>
     </html>
