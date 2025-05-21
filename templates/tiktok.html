@@ -320,14 +320,20 @@
                         {# create music wave #}
 
                         if (!audioContext) {
-                            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                            audioSource = audioContext.createMediaElementSource(audio);
-                            analyzer = audioContext.createAnalyser();
+                            try{
+                                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                                audioSource = audioContext.createMediaElementSource(audio);
+                                analyzer = audioContext.createAnalyser();
 
-                            audioSource.connect(analyzer);
-                            analyzer.connect(audioContext.destination);
+                                audioSource.connect(analyzer);
+                                analyzer.connect(audioContext.destination);
 
-                            analyzer.fftSize = 256;
+                                analyzer.fftSize = 256;
+                            }
+                            catch(e){
+                                showError(e)
+                            }
+
                         }
 
                         const canvas = document.getElementById('musicWave');
