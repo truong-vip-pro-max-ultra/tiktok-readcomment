@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, send_file, url_for
+from flask import Flask, request, jsonify, render_template, send_file, url_for, abort
 from tiktok_client import (start_client,
                            get_latest_comment,
                            start_cleanup_thread,
@@ -25,6 +25,20 @@ os.makedirs(audio_dir_youtube, exist_ok=True)
 
 old_comment_tiktok = {}
 old_comment_youtube = {}
+
+ALLOWED_ORIGINS = ['https://livestreamvoice.com']
+# ALLOWED_ORIGINS = ['http://localhost']
+
+@app.before_request
+def block_external_requests():
+    origin = request.headers.get('Origin')
+    referer = request.headers.get('Referer')
+
+    if origin and origin not in ALLOWED_ORIGINS:
+        abort(403)
+
+    if referer and not referer.startswith(tuple(ALLOWED_ORIGINS)):
+        abort(403)
 
 @app.errorhandler(404)
 def page_not_found(e):
