@@ -140,7 +140,7 @@
                 username = document.getElementById("username").value.trim();
                 if (!username) {
                     showError("Vui lòng nhập link");
-                    button.innerText = "Start";
+                    button.innerHTML = `<i class="fas fa-rocket"></i>Start`;
                     button.disabled = false;
                     button.classList.remove("opacity-50", "cursor-not-allowed");
                     return;
