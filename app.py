@@ -6,14 +6,13 @@ from tiktok_client import (start_client,
                            enable_likes,
                            enable_comments,
                            enable_gifts)
-from youtube_client import start_client_yt, get_latest_comment_yt, start_cleanup_thread_yt
+from youtube_client import start_client_yt, get_latest_comment_yt, start_cleanup_thread_yt, get_live_chat
 import os
 from gtts import gTTS
 from threading import Lock
 import utils
 import asyncio
 import ai
-import base64
 app = Flask(__name__)
 
 comment_lock_tiktok = Lock()
@@ -123,6 +122,15 @@ def get_audio_tiktok(username):
     return jsonify({"error": "No audio found"}), 404
 
 ## yt
+@app.route("/youtube/check/<url_encode>", methods=["GET"])
+def check_is_live_stream_youtube(url_encode):
+    url = utils.base64UrlDecode(url_encode)
+    if not url:
+        return jsonify({"error": "Missing url"}), 400
+    check = get_live_chat(url)
+    if check != '':
+        return jsonify({"message": f"Started Youtube client for {url}"}), 200
+    return jsonify({"error": f"{url} not live"}), 400
 
 @app.route("/youtube/start", methods=["POST"])
 def start_youtube():
@@ -130,6 +138,7 @@ def start_youtube():
     if not username:
         return jsonify({"error": "Missing username"}), 400
 
+    get_live_chat(username)
     start_client_yt(username)
     return jsonify({"message": f"Started Youtube client for {username}"}), 200
 

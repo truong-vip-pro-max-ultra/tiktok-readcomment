@@ -28,10 +28,16 @@ def cut_string(string, key, choice):
 
 
 def get_live_chat(url):
-    data = requests.get(url).text
-    data = cut_string(data, '"continuation":{"reloadContinuationData":{"continuation":"', True)
-    data = cut_string(data, '"', False)
-    return 'https://www.youtube.com/live_chat?continuation=' + data
+    key = '"continuation":{"reloadContinuationData":{"continuation":"'
+    try:
+        data = requests.get(url).text
+        if key not in data:
+            return ''
+        data = cut_string(data, key, True)
+        data = cut_string(data, '"', False)
+        return 'https://www.youtube.com/live_chat?continuation=' + data
+    except:
+        return ''
 
 
 def get_new_comment(url):

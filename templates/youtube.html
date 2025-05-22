@@ -185,14 +185,38 @@
                     return;
                 }
 
+                try {
+                    button.innerText = "Đang kiểm tra...";
+                    button.disabled = true;
+                    button.classList.add("opacity-50", "cursor-not-allowed");
+
+                    const check_live = await fetch(`/youtube/check/${base64UrlEncode(username)}`);
+                    if (check_live.status === 400) {
+                        button.innerHTML = `<i class="fas fa-rocket"></i>Start`;
+                        button.disabled = false;
+                        button.classList.remove("opacity-50", "cursor-not-allowed");
+                        showError(`Link không đúng hoặc không livestream`);
+                        return;
+                    } else if (!check_live.ok) {
+                        button.innerHTML = `<i class="fas fa-rocket"></i>Start`;
+                        button.disabled = false;
+                        button.classList.remove("opacity-50", "cursor-not-allowed");
+                        showError("Đã xảy ra lỗi. Vui lòng thử lại!");
+                        return;
+                    } else {
+                        showSuccess("Start thành công");
+                    }
+                } catch (error) {
+                    console.error("Lỗi khi gửi request:", error);
+                    showError("Không thể kết nối tới server!");
+                }
+
                 // Gửi request bắt đầu
                 await fetch("/youtube/start", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username })
                 });
-
-                showSuccess("Start thành công");
 
                 // Xử lý audio "dọn đường" cho mobile
                 // const audio = document.getElementById("player");
@@ -205,6 +229,10 @@
                 } catch (err) {
                     console.warn("Trình duyệt không cho phép phát audio tự động:", err);
                 }
+
+                button.innerText = "Đang Đọc...";
+                button.disabled = true;
+                button.classList.add("opacity-50", "cursor-not-allowed");
 
                 // Gọi lần đầu
                 fetchComment();
@@ -335,7 +363,7 @@
         </script>
 
 
-    <div id="errorPopup" class="fixed top-4 right-4 z-50 hidden bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg animate-slide-in flex items-center gap-3">
+    <div id="errorPopup" class="fixed top-2 right-2 z-50 hidden bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg animate-slide-in flex items-center gap-3">
       <i class="fas fa-exclamation-circle text-white text-xl"></i>
       <span id="errorMessage" class="flex-1">Lỗi xảy ra</span>
       <button onclick="hideError()" class="ml-4 text-white hover:text-yellow-200 focus:outline-none">
@@ -343,7 +371,7 @@
       </button>
     </div>
 
-    <div id="successPopup" class="fixed top-4 right-4 z-50 hidden bg-lime-500 text-white px-6 py-4 rounded-lg shadow-lg animate-slide-in flex items-center gap-3">
+    <div id="successPopup" class="fixed top-2 right-2 z-50 hidden bg-lime-500 text-white px-6 py-4 rounded-lg shadow-lg animate-slide-in flex items-center gap-3">
       <i class="fas fa-check-circle text-white-0 text-xl"></i>
       <span id="successMessage" class="flex-1">Thành công</span>
       <button onclick="hideSuccess()" class="ml-4 text-white hover:text-yellow-200 focus:outline-none">
@@ -375,8 +403,7 @@
         popup.classList.remove("hidden");
 
         // Tự ẩn sau 4 giây
-        clearTimeout(window.errorTimeout);
-        window.errorTimeout = setTimeout(() => {
+        setTimeout(() => {
           hideError();
         }, 4000);
       }
@@ -389,8 +416,7 @@
         popup.classList.remove("hidden");
 
         // Tự ẩn sau 4 giây
-        clearTimeout(window.errorTimeout);
-        window.errorTimeout = setTimeout(() => {
+        setTimeout(() => {
           hideSuccess();
         }, 4000);
       }
