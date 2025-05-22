@@ -97,6 +97,17 @@
         background-size: 200% 200%;
         animation: gradientShift 3s ease infinite;
       }
+
+      #musicWave {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 999;
+          opacity: 0.7;
+          pointer-events: none;
+      }
     </style>
 
     <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
@@ -117,7 +128,12 @@
             </button>
 
             <h2 class="text-xl font-semibold mt-2 text-pink-300">Danh sách comment</h2>
-            <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>
+{#            <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>#}
+
+            <div class="relative mt-2 h-48 overflow-y-auto rounded-md">
+              <canvas id="musicWave" class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none z-0"></canvas>
+              <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>
+            </div>
 
             <audio id="player" controls autoplay hidden></audio>
 
@@ -135,9 +151,26 @@
             let currentComment = "";
             let username = "";
 
+            let audioContext;
+            let audioSource;
+            let analyzer;
+
             const audio = document.getElementById("player");
 
+            const musicWave = document.getElementById('musicWave');
+            const ctxMusicWave = musicWave.getContext('2d');
+
             async function startClient() {
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    audioSource = audioContext.createMediaElementSource(audio);
+                    analyzer = audioContext.createAnalyser();
+
+                    audioSource.connect(analyzer);
+                    analyzer.connect(audioContext.destination);
+
+                    analyzer.fftSize = 256;
+                }
                 const button = document.getElementById("startButton");
                 button.innerText = "Đang Đọc...";
                 button.disabled = true;
@@ -162,7 +195,7 @@
                 showSuccess("Start thành công");
 
                 // Xử lý audio "dọn đường" cho mobile
-                const audio = document.getElementById("player");
+                // const audio = document.getElementById("player");
                 try {
                     audio.src = ""; // Làm sạch
                     await audio.play();
@@ -230,6 +263,45 @@
                         audio.onended = () => {
                             fetchComment();
                         };
+
+                        {# create music wave #}
+
+                        function resizeCanvas() {
+                            musicWave.width = musicWave.offsetWidth;
+                            musicWave.height = musicWave.offsetHeight;
+                        }
+
+                        resizeCanvas();
+                        window.addEventListener('resize', resizeCanvas);
+
+                        const bufferLength = analyzer.frequencyBinCount;
+                        const dataArray = new Uint8Array(bufferLength);
+
+                        function draw() {
+                            requestAnimationFrame(draw);
+
+                            analyzer.getByteFrequencyData(dataArray);
+
+                            ctxMusicWave.clearRect(0, 0, musicWave.width, musicWave.height);
+
+                            const barWidth = (musicWave.width / bufferLength) * 2.5;
+                            let barHeight;
+                            let x = 0;
+
+                            for (let i = 0; i < bufferLength; i++) {
+                                barHeight = dataArray[i];
+                                ctxMusicWave.fillStyle = `rgb(${barHeight + 100},50,200)`;
+                                ctxMusicWave.fillRect(x, musicWave.height - barHeight / 3, barWidth, barHeight / 3);
+                                x += barWidth + 1;
+                            }
+                        }
+                        audio.onplay = () => {
+                            if (audioContext.state === 'suspended') {
+                                audioContext.resume();
+                            }
+                            draw();
+                        };
+                        {# end music wave #}
 
                         await audio.play();
                     } else {
