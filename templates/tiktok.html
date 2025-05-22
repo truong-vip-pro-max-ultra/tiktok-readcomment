@@ -204,7 +204,7 @@
             let audioContext;
             let audioSource;
             let analyzer;
-
+            const audio = document.getElementById("player");
             function isDesktop() {
               return !/Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent)
                 && window.innerWidth > 768;
@@ -212,7 +212,7 @@
 
             async function startClient() {
                 if (!audioContext) {
-                  const audio = document.getElementById("player");
+                  
                     audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     audioSource = audioContext.createMediaElementSource(audio);
                                 analyzer = audioContext.createAnalyser();
@@ -266,7 +266,7 @@
                 });
 
                 // Xử lý audio "dọn đường" cho mobile
-                const audio = document.getElementById("player");
+                //const audio = document.getElementById("player");
                 try {
                     audio.src = ""; // Làm sạch
                     await audio.play();
@@ -327,7 +327,7 @@
                         commentBox.innerText += currentComment + '\n';
                         commentBox.scrollTop = commentBox.scrollHeight;
 
-                        const audio = document.getElementById("player");
+                        //const audio = document.getElementById("player");
                         audio.src = `/tiktok/audio/${username}?t=${Date.now()}`;
                         audio.load();
                         audio.playbackRate = 1.5;
