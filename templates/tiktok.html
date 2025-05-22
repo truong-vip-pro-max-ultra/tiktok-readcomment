@@ -222,7 +222,7 @@
                     analyzer.fftSize = 256;
                 }
                 const button = document.getElementById("startButton");
-                username = document.getElementById("username").value.trim();
+                username = document.getElementById("username").value.trim().toLowerCase();
                 if (!username) {
                     showError("Vui lòng nhập username");
                     button.innerHTML = `<i class="fas fa-rocket"></i>Start`;
