@@ -331,6 +331,10 @@
                         audio.src = `/tiktok/audio/${username}?t=${Date.now()}`;
                         //audio.load();
                         audio.playbackRate = 1.5;
+                        //await waitForAudioLoad(audio);
+                        audio.onended = () => {
+                            fetchComment();
+                        };
 
                         if(isDesktop() || 1==1) {
                             {# create music wave #}
@@ -394,10 +398,7 @@
                             {# end music wave #}
                         }
 
-                        await waitForAudioLoad(audio);
-                        audio.onended = () => {
-                            fetchComment();
-                        };
+                        
                         await audio.play();
                     } else {
                         setTimeout(fetchComment, 1000);
