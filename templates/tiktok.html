@@ -358,10 +358,10 @@
                             resizeCanvas();
                             window.addEventListener('resize', resizeCanvas);
 
-                            audioSource.connect(analyzer);
+                            /*audioSource.connect(analyzer);
                             analyzer.connect(audioContext.destination);
 
-                            analyzer.fftSize = 256;
+                            analyzer.fftSize = 256;*/
                             const bufferLength = analyzer.frequencyBinCount;
                             const dataArray = new Uint8Array(bufferLength);
 
