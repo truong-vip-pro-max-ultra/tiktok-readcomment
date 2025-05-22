@@ -13,7 +13,7 @@ from threading import Lock
 import utils
 import asyncio
 import ai
-
+import base64
 app = Flask(__name__)
 
 comment_lock_tiktok = Lock()
@@ -133,25 +133,25 @@ def start_youtube():
     start_client_yt(username)
     return jsonify({"message": f"Started Youtube client for {username}"}), 200
 
-@app.route("/youtube/comment", methods=["POST"])
-def get_comment_youtube():
-    username = request.json.get("username")
-    if not username:
+@app.route("/youtube/comment/<url_encode>")
+def get_comment_youtube(url_encode):
+    url = utils.base64UrlDecode(url_encode)
+    if not url:
         return jsonify({"error": "Missing username"}), 400
 
     has_new_comment = False
 
-    comment = get_latest_comment_yt(username)
-    audio_url = url_for('get_audio_youtube', username=username)
+    comment = get_latest_comment_yt(url)
+    audio_url = url_for('get_audio_youtube', url_encode=url_encode)
     # filename = utils.convert_username_youtube(username) + ".mp3"
-    filename = utils.convert_username_youtube(username) + ".wav"
+    filename = utils.convert_username_youtube(url) + ".wav"
     if comment:
-        if username in old_comment_youtube.keys():
-            if old_comment_youtube[username] != comment:
-                old_comment_youtube[username] = comment
+        if url in old_comment_youtube.keys():
+            if old_comment_youtube[url] != comment:
+                old_comment_youtube[url] = comment
                 has_new_comment = True
         else:
-            old_comment_youtube[username] = comment
+            old_comment_youtube[url] = comment
 
         if has_new_comment:
             with comment_lock_youtube:
@@ -166,20 +166,19 @@ def get_comment_youtube():
         #     # tts.save(mp3_path)
         #     utils.save_speech(comment, mp3_path)
 
-    return jsonify({"username": username, "latest_comment": comment, "audio_url": audio_url})
+    return jsonify({"username": url, "latest_comment": comment, "audio_url": audio_url})
 
-@app.route("/youtube/audio", methods=["POST"])
-def get_audio_youtube():
-    username = request.json.get("username")
+@app.route("/youtube/audio/<url_encode>")
+def get_audio_youtube(url_encode):
+    url = utils.base64UrlDecode(url_encode)
     # filename = utils.convert_username_youtube(username) + ".mp3"
-    filename = utils.convert_username_youtube(username) + ".wav"
+    filename = utils.convert_username_youtube(url) + ".wav"
     mp3_path = os.path.join(audio_dir_youtube, filename)
     if os.path.exists(mp3_path):
         utils.change_speed(mp3_path,mp3_path, 1.3)
         # return send_file(mp3_path, mimetype="audio/mpeg")
         return send_file(mp3_path, mimetype="audio/wav")
     return jsonify({"error": "No audio found"}), 404
-
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ import scipy.signal as signal
 import re
 import asyncio
 import edge_tts
-
+import base64
 def translate_text(text):
     return GoogleTranslator(source='auto', target='vi').translate(text)
 
@@ -41,3 +41,8 @@ def save_speech(text: str, filename: str = "output.mp3", voice: str = "vi-VN-Hoa
         communicate = edge_tts.Communicate(text=text, voice=voice)
         await communicate.save(filename)
     asyncio.run(_save())
+
+def base64UrlDecode(encoded_url):
+    padding = '=' * (-len(encoded_url) % 4)
+    decoded_url = base64.urlsafe_b64decode(encoded_url + padding).decode()
+    return decoded_url

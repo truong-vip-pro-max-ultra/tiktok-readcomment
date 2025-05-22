@@ -128,8 +128,14 @@
         </div>
 
         <script>
+            function base64UrlEncode(str) {
+              let base64 = btoa(str);
+              return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+            }
             let currentComment = "";
             let username = "";
+
+            const audio = document.getElementById("player");
 
             async function startClient() {
                 const button = document.getElementById("startButton");
@@ -180,11 +186,12 @@
 
             async function fetchComment() {
                 try {
-                    const res = await fetch("/youtube/comment", {
+                    /*const res = await fetch("/youtube/comment", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ username })
-                    });
+                    });*/
+                    const res = await fetch(`/youtube/comment/${base64UrlEncode(username)}`)
                     const data = await res.json();
 
                     if (data.latest_comment && data.latest_comment !== currentComment) {
@@ -194,9 +201,8 @@
                         commentBox.innerText += currentComment + '\n';
                         commentBox.scrollTop = commentBox.scrollHeight;
 
-                        const audio = document.getElementById("player");
-                        {#audio.src = `/youtube/audio/${username}?t=${Date.now()}`;#}
-                        const response = await fetch("/youtube/audio", {
+                        audio.src = `/youtube/audio/${base64UrlEncode(username)}?t=${Date.now()}`;
+                        /*const response = await fetch("/youtube/audio", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ username })
@@ -214,11 +220,18 @@
                             audio.onended = () => {
                                 fetchComment();
                             };
+
                             await audio.play();
                         } else {
                             console.error("Failed to fetch audio");
                             setTimeout(fetchComment, 1000);
                         }
+                        */
+                        audio.onended = () => {
+                            fetchComment();
+                        };
+
+                        await audio.play();
                     } else {
                         setTimeout(fetchComment, 1000);
                     }
