@@ -211,6 +211,16 @@
             }
 
             async function startClient() {
+                if (!audioContext) {
+                                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                                audioSource = audioContext.createMediaElementSource(audio);
+                                analyzer = audioContext.createAnalyser();
+
+                                audioSource.connect(analyzer);
+                                analyzer.connect(audioContext.destination);
+
+                                analyzer.fftSize = 256;
+                            }
                 const button = document.getElementById("startButton");
                 username = document.getElementById("username").value.trim();
                 if (!username) {
@@ -321,10 +331,10 @@
                         audio.load();
                         audio.playbackRate = 1.5;
 
-                        if(isDesktop()) {
+                        if(isDesktop() || 1==1) {
                             {# create music wave #}
 
-                            if (!audioContext) {
+                            /*if (!audioContext) {
                                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
                                 audioSource = audioContext.createMediaElementSource(audio);
                                 analyzer = audioContext.createAnalyser();
@@ -333,7 +343,7 @@
                                 analyzer.connect(audioContext.destination);
 
                                 analyzer.fftSize = 256;
-                            }
+                            }*/
 
                             const canvas = document.getElementById('musicWave');
                             const ctx = canvas.getContext('2d');
