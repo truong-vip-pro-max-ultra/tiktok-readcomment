@@ -153,6 +153,8 @@
                     body: JSON.stringify({ username })
                 });
 
+                showSuccess("Start thành công");
+
                 // Xử lý audio "dọn đường" cho mobile
                 const audio = document.getElementById("player");
                 try {
@@ -205,10 +207,10 @@
                             const audioUrl = URL.createObjectURL(audioBlob);
                             const audio = new Audio(audioUrl);
 
-                            audio.load();
-                            audio.playbackRate = 1.5;
+                            {#audio.load();#}
+                            {#audio.playbackRate = 1.5;#}
 
-                            await waitForAudioLoad(audio);
+                            {#await waitForAudioLoad(audio);#}
                             audio.onended = () => {
                                 fetchComment();
                             };
@@ -256,6 +258,13 @@
       </button>
     </div>
 
+    <div id="successPopup" class="fixed top-4 right-4 z-50 hidden bg-lime-500 text-white px-6 py-4 rounded-lg shadow-lg animate-slide-in flex items-center gap-3">
+      <i class="fas fa-check-circle text-white-0 text-xl"></i>
+      <span id="successMessage" class="flex-1">Thành công</span>
+      <button onclick="hideSuccess()" class="ml-4 text-white hover:text-yellow-200 focus:outline-none">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
     <style>
       @keyframes slideIn {
         from {
@@ -272,7 +281,7 @@
       }
     </style>
 
-    <script>
+     <script>
       function showError(message) {
         const popup = document.getElementById("errorPopup");
         const msg = document.getElementById("errorMessage");
@@ -287,8 +296,27 @@
         }, 4000);
       }
 
+      function showSuccess(message) {
+        const popup = document.getElementById("successPopup");
+        const msg = document.getElementById("successMessage");
+
+        msg.innerText = message;
+        popup.classList.remove("hidden");
+
+        // Tự ẩn sau 4 giây
+        clearTimeout(window.errorTimeout);
+        window.errorTimeout = setTimeout(() => {
+          hideSuccess();
+        }, 4000);
+      }
+
+
       function hideError() {
         const popup = document.getElementById("errorPopup");
+        popup.classList.add("hidden");
+      }
+       function hideSuccess() {
+        const popup = document.getElementById("successPopup");
         popup.classList.add("hidden");
       }
 

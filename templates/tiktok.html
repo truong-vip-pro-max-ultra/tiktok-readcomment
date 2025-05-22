@@ -250,7 +250,7 @@
                         showError("Đã xảy ra lỗi. Vui lòng thử lại!");
                         return;
                     } else {
-                        console.log("Start thành công");
+                        showSuccess("Start thành công");
                     }
                 } catch (error) {
                     console.error("Lỗi khi gửi request:", error);
@@ -380,7 +380,7 @@
                         setTimeout(fetchComment, 1000);
                     }
                 } catch (err) {
-                    showError("Lỗi khi fetch hoặc phát audio: "+err);
+                    showError("Lỗi khi fetch hoặc phát audio!");
                     setTimeout(fetchComment, 1000);
                 }
             }
@@ -417,8 +417,8 @@
     </div>
 
     <div id="successPopup" class="fixed top-4 right-4 z-50 hidden bg-lime-500 text-white px-6 py-4 rounded-lg shadow-lg animate-slide-in flex items-center gap-3">
-      <i class="fas fa-exclamation-circle text-white text-xl"></i>
-      <span id="errorMessage" class="flex-1">Thành công</span>
+      <i class="fas fa-check-circle text-white-0 text-xl"></i>
+      <span id="successMessage" class="flex-1">Thành công</span>
       <button onclick="hideSuccess()" class="ml-4 text-white hover:text-yellow-200 focus:outline-none">
         <i class="fas fa-times"></i>
       </button>
@@ -455,6 +455,21 @@
           hideError();
         }, 4000);
       }
+
+       function showSuccess(message) {
+        const popup = document.getElementById("successPopup");
+        const msg = document.getElementById("successMessage");
+
+        msg.innerText = message;
+        popup.classList.remove("hidden");
+
+        // Tự ẩn sau 4 giây
+        clearTimeout(window.errorTimeout);
+        window.errorTimeout = setTimeout(() => {
+          hideSuccess();
+        }, 4000);
+      }
+
 
       function hideError() {
         const popup = document.getElementById("errorPopup");
