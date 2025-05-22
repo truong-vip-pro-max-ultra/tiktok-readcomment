@@ -207,10 +207,10 @@
                             const audioUrl = URL.createObjectURL(audioBlob);
                             const audio = new Audio(audioUrl);
 
-                            {#audio.load();#}
+                            audio.load();
                             {#audio.playbackRate = 1.5;#}
 
-                            {#await waitForAudioLoad(audio);#}
+                            await waitForAudioLoad(audio);
                             audio.onended = () => {
                                 fetchComment();
                             };
