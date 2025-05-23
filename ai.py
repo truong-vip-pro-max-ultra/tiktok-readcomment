@@ -55,3 +55,32 @@ def process_v2(name,comment):
     except:
         return ''
 
+def copilot(name,comment):
+    authorization = 'GitHub-Bearer zgTsTztTNU7tMwMgCUKRVeTwb5Pc6MW_YryIfW0ZrtTGi-GdDhr8rald8QMVqR482Neo4c0t9PnQhVUVTrK-K8JIkNZEk8tF-paewreG0kY='
+    thread_id = 'e3937469-c29d-44a6-824a-295a1330f2c3'
+    headers = {
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
+        "authorization": authorization,
+        "cache-control": "max-age=0",
+        "content-length": "446",
+        "content-type": "text/event-stream",
+        "copilot-integration-id": "copilot-chat",
+        "origin": "https://github.com",
+        "priority": "u=1, i",
+        "referer": "https://github.com/",
+        "sec-ch-ua": '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "cross-site",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+    }
+
+    url = f'https://api.individual.githubcopilot.com/github/chat/threads/{thread_id}/messages?'
+    content = f'Tôi tên là "{name}" đang xem livestream của bạn, còn bạn là người livestream, tôi comment như sau: "{comment}" -> bạn hãy trả lời lại một cách tối ưu ngắn gọn và dễ thương'
+    json = {"responseMessageID":"58fd9c32-2cd4-464e-a48b-1ec8703ddac7","content": content,"intent":"conversation","references":[],"context":[],"currentURL":"https://github.com/copilot/c/e3937469-c29d-44a6-824a-295a1330f2c3","streaming":True,"confirmations":[],"customInstructions":[],"model":"gpt-4.1","mode":"immersive","parentMessageID":"22fe5a9b-1875-44c9-ade5-f082a636066f","tools":[],"mediaContent":[],"skillOptions":{"deepCodeSearch":False}}
+    response = requests.post(url, json=json, headers=headers)
+    return utils.merge_text(response.text)

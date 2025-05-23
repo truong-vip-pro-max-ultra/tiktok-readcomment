@@ -5,6 +5,8 @@ import re
 import asyncio
 import edge_tts
 import base64
+import json
+import re
 def translate_text(text):
     return GoogleTranslator(source='auto', target='vi').translate(text)
 
@@ -46,3 +48,18 @@ def base64UrlDecode(encoded_url):
     padding = '=' * (-len(encoded_url) % 4)
     decoded_url = base64.urlsafe_b64decode(encoded_url + padding).decode()
     return decoded_url
+def fix_utf8(text):
+    return text.encode('latin1').decode('utf-8')
+def merge_text(input_data):
+    lines = input_data.strip().splitlines()
+    fixed_parts = []
+
+    for line in lines:
+        if line.startswith("data: "):
+            try:
+                obj = json.loads(line[6:])
+                body = obj.get("body", "")
+                fixed_parts.append(fix_utf8(body))
+            except Exception as e:
+                print("Lỗi xử lý:", e)
+    return ''.join(fixed_parts)

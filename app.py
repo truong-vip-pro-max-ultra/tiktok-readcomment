@@ -98,7 +98,11 @@ def get_comment(username):
                     if not comment.lower().startswith('cảm ơn'):
                         name = utils.cut_string_head(comment, ' : ')
                         content = utils.cut_string_last(comment, ' : ')
-                        answer = comment + " . . . " + ai.process_v2(name, content)
+                        try:
+                            result_ai = ai.copilot(name, content)
+                        except:
+                            result_ai = ai.process_v2(name, content)
+                        answer = comment + " . . . " + result_ai
                         utils.save_speech(answer, mp3_path)
                     else:
                         comment = ''
