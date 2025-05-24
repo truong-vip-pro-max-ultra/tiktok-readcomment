@@ -55,8 +55,8 @@ def process_v2(name,comment):
     except:
         return ''
 def copilot_gen_token():
-    cookie_github = '_octo=GH1.1.269847082.1747332550; _device_id=657be2f10caeeb87a84e4d37dc238818; GHCC=Required:1-Analytics:1-SocialMedia:1-Advertising:1; MicrosoftApplicationsTelemetryDeviceId=3eb3cebf-834e-444a-9cfd-63221d166b6b; MSFPC=GUID=bc56fc6a64d342fdbe5560b45443792b&HASH=bc56&LV=202505&V=4&LU=1748026541082; saved_user_sessions=213114324%3AhDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; user_session=hDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; __Host-user_session_same_site=hDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; logged_in=yes; dotcom_user=copilotvoice1; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark%22%2C%22color_mode%22%3A%22dark%22%7D%7D; cpu_bucket=sm; preferred_color_mode=light; tz=Asia%2FBangkok; _gh_sess=reXN6XlsTYOxAj7zBrUkUrfD0mK4yKpzGRDOznns4UyMb7%2Bqq8XfTTUeHHH%2F93epRYgUmOBKuoMUzcUmMfBeLLsYVRO6LMxzpbY1S7ahpgqP6jE7lUzS%2BOwdw6bFRpuqA5lo%2FUvM9h7Sqdsisx2%2FLWzeEQt4%2FIII%2Fehx%2BhALzVgV%2BI4I%2BeGmM4qgeYiRq0wmI0frjsRquEKXKlMwIrmODBF%2Bu%2BmAvtkk5XetTMBoM0iTLHbPq8q2qi3v%2B8in91g7lYCFWW0cCtK2tKq7%2BiChQvds0dNAMLj%2F8AbyIkaExGi49OuxnxpdYmCiH6EvIcWREjULmxEVF%2Fhx9%2Fpg5xTAIERg%2BovcEhBwF1zsVQ4NnB3W%2FP%2FsR0Oa7Io%2B8%2FyDncUnSgmRRBpRu2aGqLW34oMxL%2FQSCYc8G6a%2Byr5LfRt9L3cVpislptWCruWp85BkxiooeBeiNEY40JKNEXnRJ59vKxpo4%2BTypRQlmY%2FGYdblSsaSlzfli8ytJSC1Np19pOZkvZBBhZJEkhtbEz3%2FJLaFU4zevdzGgGrnZIgfH6kyuXjhFdNCVheKc%2Fhxkkvca85Fte3QvB6D5AG81rtNTO3hvZ38VUkXs6zkVjvuoi6BIWJyJMqMVcFQueL9XjP%2BbHjaUufWtd2Idgd7RLaKJkEBVGqlmbuWYGQ%2Bdt4qMhc9R%2FUsd9ERpe26CZscChK1tQkXWrktVYoF1HbV5v5cmU6lVKCilBNf%2BISsWnOqdorDj%2FUWR%2F6ZxWz%2FwBOfMc9u12%2BUhXOr9aigHqz%2FTPMsgSxwG0h0gK9EfAxl0KQOlFyZAgoQgII2--8Dipg0YI1oHLrzJr--SoM7FlD7C6%2FhzDP%2FkOgSBQ%3D%3D'
-    headers = {
+    cookie_github = '_octo=GH1.1.269847082.1747332550; _device_id=657be2f10caeeb87a84e4d37dc238818; GHCC=Required:1-Analytics:1-SocialMedia:1-Advertising:1; MicrosoftApplicationsTelemetryDeviceId=3eb3cebf-834e-444a-9cfd-63221d166b6b; MSFPC=GUID=bc56fc6a64d342fdbe5560b45443792b&HASH=bc56&LV=202505&V=4&LU=1748026541082; saved_user_sessions=213114324%3AhDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; user_session=hDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; __Host-user_session_same_site=hDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; logged_in=yes; dotcom_user=copilotvoice1; ai_session=lTWvzdv7Fk5gVQkq5iZi7D|1748103946659|1748104531891; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark%22%2C%22color_mode%22%3A%22dark%22%7D%7D; cpu_bucket=sm; preferred_color_mode=light; tz=Asia%2FBangkok; _gh_sess=UREVyTYFtIux%2FJ%2BbbDDYN9aOqFbWyV7GVQT645O5rbYR9eJb9ArfhqdphEaGDYe%2BKYjFAAJe0TZMW3jv6eZ6E%2BAt2iqrv%2FuA4E3IA%2B%2FMS6OI0kztsp0gKHGpVAFGPukZV82VJaJNVtKxa%2BCQX5sV3sIF68H2ceX2SmWrgXdgbGmSN39EqZNAX3j65owTC134znqyLnngUfrdAUnzFBB9VheEXAZ5qTiuVqGFceDcPR3zUTl1oWPzWctI5XyU4pcxSiLsnNuQSNhHjDxYhuuhHtiXLPlawMydEXg3HUQpfA98bqFaTCAxL9OjbdPi7HrBTrqlSo7gaAxtF2Utnr2oeiiAV7FZtS%2FKprJ%2Bcz3V8JC1cARarKdHbRulSQI5zEvF--OvP5vWj1ZVSr%2FXIA--yHxleeIxIYolfJR4y5lsYw%3D%3D'
+    headers_copilot = {
         "accept": "application/json",
         "accept-encoding": "gzip, deflate, br, zstd",
         "accept-language": "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
@@ -76,7 +76,7 @@ def copilot_gen_token():
         "cookie": cookie_github
     }
 
-    response = requests.post('https://github.com/github-copilot/chat/token', headers=headers)
+    response = requests.post('https://github.com/github-copilot/chat/token', headers=headers_copilot)
     return 'GitHub-Bearer '+response.json()['token'] if response.status_code == 200 else ''
 
 authorization_copilot = copilot_gen_token()
