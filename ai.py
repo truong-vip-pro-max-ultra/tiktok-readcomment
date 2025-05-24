@@ -54,15 +54,41 @@ def process_v2(name,comment):
         return result
     except:
         return ''
+def copilot_gen_token():
+    cookie_github = '_octo=GH1.1.269847082.1747332550; _device_id=657be2f10caeeb87a84e4d37dc238818; GHCC=Required:1-Analytics:1-SocialMedia:1-Advertising:1; MicrosoftApplicationsTelemetryDeviceId=3eb3cebf-834e-444a-9cfd-63221d166b6b; MSFPC=GUID=bc56fc6a64d342fdbe5560b45443792b&HASH=bc56&LV=202505&V=4&LU=1748026541082; saved_user_sessions=213114324%3AhDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; user_session=hDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; __Host-user_session_same_site=hDLgovXndNbjAAm4_Lc8TzAiP6t1EwleQKPeo_Xh6679Os1H; logged_in=yes; dotcom_user=copilotvoice1; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark%22%2C%22color_mode%22%3A%22dark%22%7D%7D; cpu_bucket=sm; preferred_color_mode=light; tz=Asia%2FBangkok; _gh_sess=reXN6XlsTYOxAj7zBrUkUrfD0mK4yKpzGRDOznns4UyMb7%2Bqq8XfTTUeHHH%2F93epRYgUmOBKuoMUzcUmMfBeLLsYVRO6LMxzpbY1S7ahpgqP6jE7lUzS%2BOwdw6bFRpuqA5lo%2FUvM9h7Sqdsisx2%2FLWzeEQt4%2FIII%2Fehx%2BhALzVgV%2BI4I%2BeGmM4qgeYiRq0wmI0frjsRquEKXKlMwIrmODBF%2Bu%2BmAvtkk5XetTMBoM0iTLHbPq8q2qi3v%2B8in91g7lYCFWW0cCtK2tKq7%2BiChQvds0dNAMLj%2F8AbyIkaExGi49OuxnxpdYmCiH6EvIcWREjULmxEVF%2Fhx9%2Fpg5xTAIERg%2BovcEhBwF1zsVQ4NnB3W%2FP%2FsR0Oa7Io%2B8%2FyDncUnSgmRRBpRu2aGqLW34oMxL%2FQSCYc8G6a%2Byr5LfRt9L3cVpislptWCruWp85BkxiooeBeiNEY40JKNEXnRJ59vKxpo4%2BTypRQlmY%2FGYdblSsaSlzfli8ytJSC1Np19pOZkvZBBhZJEkhtbEz3%2FJLaFU4zevdzGgGrnZIgfH6kyuXjhFdNCVheKc%2Fhxkkvca85Fte3QvB6D5AG81rtNTO3hvZ38VUkXs6zkVjvuoi6BIWJyJMqMVcFQueL9XjP%2BbHjaUufWtd2Idgd7RLaKJkEBVGqlmbuWYGQ%2Bdt4qMhc9R%2FUsd9ERpe26CZscChK1tQkXWrktVYoF1HbV5v5cmU6lVKCilBNf%2BISsWnOqdorDj%2FUWR%2F6ZxWz%2FwBOfMc9u12%2BUhXOr9aigHqz%2FTPMsgSxwG0h0gK9EfAxl0KQOlFyZAgoQgII2--8Dipg0YI1oHLrzJr--SoM7FlD7C6%2FhzDP%2FkOgSBQ%3D%3D'
+    headers = {
+        "accept": "application/json",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
+        "content-length": "0",
+        "content-type": "application/json",
+        "github-verified-fetch": "true",
+        "origin": "https://github.com",
+        "priority": "u=1, i",
+        "referer": "https://github.com/copilot",
+        "sec-ch-ua": '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+        "cookie": cookie_github
+    }
+
+    response = requests.post('https://github.com/github-copilot/chat/token', headers=headers)
+    return 'GitHub-Bearer '+response.json()['token'] if response.status_code == 200 else ''
+
+authorization_copilot = copilot_gen_token()
 
 def copilot(name,comment):
-    authorization = 'GitHub-Bearer zgTsTztTNU7tMwMgCUKRVeTwb5Pc6MW_YryIfW0ZrtTGi-GdDhr8rald8QMVqR482Neo4c0t9PnQhVUVTrK-K8JIkNZEk8tF-paewreG0kY='
+    global authorization_copilot
     thread_id = 'e3937469-c29d-44a6-824a-295a1330f2c3'
-    headers = {
+    headers_copilot = {
         "accept": "*/*",
         "accept-encoding": "gzip, deflate, br, zstd",
         "accept-language": "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
-        "authorization": authorization,
+        "authorization": authorization_copilot,
         "cache-control": "max-age=0",
         "content-length": "446",
         "content-type": "text/event-stream",
@@ -79,8 +105,31 @@ def copilot(name,comment):
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
     }
 
-    url = f'https://api.individual.githubcopilot.com/github/chat/threads/{thread_id}/messages?'
-    content = f'Tôi tên là "{name}" đang xem livestream của bạn, còn bạn là người livestream, tôi comment như sau: "{comment}" -> bạn hãy trả lời lại một cách tối ưu ngắn gọn và dễ thương'
+    url_copilot = f'https://api.individual.githubcopilot.com/github/chat/threads/{thread_id}/messages?'
+    content = f'Tôi tên là "{name}" đang xem livestream của bạn, còn bạn là người livestream, tôi comment như sau: "{comment}" -> bạn hãy trả lời lại một cách tối ưu ngắn gọn và dễ thương và không sử dụng icon'
     json = {"responseMessageID":"58fd9c32-2cd4-464e-a48b-1ec8703ddac7","content": content,"intent":"conversation","references":[],"context":[],"currentURL":"https://github.com/copilot/c/e3937469-c29d-44a6-824a-295a1330f2c3","streaming":True,"confirmations":[],"customInstructions":[],"model":"gpt-4.1","mode":"immersive","parentMessageID":"22fe5a9b-1875-44c9-ade5-f082a636066f","tools":[],"mediaContent":[],"skillOptions":{"deepCodeSearch":False}}
-    response = requests.post(url, json=json, headers=headers)
+    response = requests.post(url_copilot, json=json, headers=headers_copilot)
+    if response.status_code == 401:
+        authorization_copilot = copilot_gen_token()
+        headers_copilot_new = {
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
+            "authorization": authorization_copilot,
+            "cache-control": "max-age=0",
+            "content-length": "446",
+            "content-type": "text/event-stream",
+            "copilot-integration-id": "copilot-chat",
+            "origin": "https://github.com",
+            "priority": "u=1, i",
+            "referer": "https://github.com/",
+            "sec-ch-ua": '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": '"Windows"',
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+        }
+        response = requests.post(url_copilot, json=json, headers=headers_copilot_new)
     return utils.merge_text(response.text)
