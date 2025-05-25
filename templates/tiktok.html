@@ -342,6 +342,13 @@
                     });
 
                     const data = await res.json();
+                    if (data.latest_comment == "" && currentComment != "") {
+                         await fetch("/tiktok/start", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ username })
+                        });
+                    }
 
                     if (data.latest_comment && data.latest_comment !== currentComment) {
                         currentComment = data.latest_comment;

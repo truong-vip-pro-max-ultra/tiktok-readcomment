@@ -80,7 +80,7 @@ def start_client_yt(username):
                     old_cmt_id = new_cmt.comment_id
                     with lock:
                         latest_comments[username] = f"{new_cmt.author}: {new_cmt.content}"
-                        latest_actives[username] = time.time()
+                        # latest_actives[username] = time.time()
                 time.sleep(1)  # Tránh spam request
             except Exception as e:
                 print(f"⚠️ Lỗi trong client {username}: {e}")

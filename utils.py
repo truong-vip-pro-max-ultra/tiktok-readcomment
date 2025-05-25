@@ -45,9 +45,12 @@ def save_speech(text: str, filename: str = "output.mp3", voice: str = "vi-VN-Hoa
     asyncio.run(_save())
 
 def base64UrlDecode(encoded_url):
-    padding = '=' * (-len(encoded_url) % 4)
-    decoded_url = base64.urlsafe_b64decode(encoded_url + padding).decode()
-    return decoded_url
+    try:
+        padding = '=' * (-len(encoded_url) % 4)
+        decoded_url = base64.urlsafe_b64decode(encoded_url + padding).decode()
+        return decoded_url
+    except:
+        return ''
 def fix_utf8(text):
     return text.encode('latin1').decode('utf-8')
 def merge_text(input_data):

@@ -156,6 +156,11 @@
 
             <audio id="player" controls autoplay hidden></audio>
 
+            <button id="yt" onclick="copyStreamSourceOBS()"
+                    class="mt-5 w-full bg-pink-600 hover:bg-pink-800 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">
+                Copy stream source OBS
+            </button>
+
             <button id="yt" onclick="window.location.href='/'"
                     class="mt-5 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">
                 Phiên bản TikTok
@@ -263,6 +268,19 @@
                 fetchComment();
             }
 
+            function copyStreamSourceOBS(){
+                const host = window.location.host;
+                const urlEncode = document.getElementById("username").value.trim();
+
+                navigator.clipboard.writeText(host+'/youtube/widget/'+base64UrlEncode(urlEncode))
+                  .then(() => {
+                    console.log("Đã copy vào clipboard!");
+                  })
+                  .catch(err => {
+                    console.error("Lỗi khi copy vào clipboard:", err);
+                  });
+            }
+
             function waitForAudioLoad(audio) {
                 return new Promise((resolve, reject) => {
                     audio.oncanplaythrough = resolve;
@@ -279,7 +297,13 @@
                     });*/
                     const res = await fetch(`/youtube/comment/${base64UrlEncode(username)}`)
                     const data = await res.json();
-
+                    if (data.latest_comment == "" && currentComment != "") {
+                        await fetch("/youtube/start", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ username })
+                        });
+                    }
                     if (data.latest_comment && data.latest_comment !== currentComment) {
                         currentComment = data.latest_comment;
 

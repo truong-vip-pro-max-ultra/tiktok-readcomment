@@ -105,11 +105,11 @@ def get_comment(username):
                         answer = comment + " . . . " + result_ai
                         utils.save_speech(answer, mp3_path)
                     else:
-                        comment = ''
+                        comment = old_comment_tiktok[username]
                 else:
                     utils.save_speech(comment, mp3_path)
         else:
-            comment = ''
+            comment = old_comment_tiktok[username]
 
     return jsonify({"username": username, "latest_comment": comment, "audio_url": audio_url})
 
@@ -171,8 +171,8 @@ def get_comment_youtube(url_encode):
                 mp3_path = os.path.join(audio_dir_youtube, filename)
                 utils.save_speech(comment, mp3_path)
         else:
-            comment = ''
-
+            # comment = ''
+            comment = old_comment_youtube[url]
         # with comment_lock:
         #     mp3_path = os.path.join(audio_dir_youtube, filename)
         #     # tts = gTTS(comment, lang='vi')
@@ -192,6 +192,12 @@ def get_audio_youtube(url_encode):
         # return send_file(mp3_path, mimetype="audio/mpeg")
         return send_file(mp3_path, mimetype="audio/wav")
     return jsonify({"error": "No audio found"}), 404
+
+
+@app.route("/youtube/widget/<url_encode>")
+def youtube_widget(url_encode):
+    url = utils.base64UrlDecode(url_encode)
+    return render_template("youtube_widget.html", url = url)
 
 
 if __name__ == "__main__":
