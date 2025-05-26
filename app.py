@@ -32,7 +32,7 @@ old_comment_youtube = {}
 old_comment_facebook = {}
 
 ALLOWED_ORIGINS = ['https://livestreamvoice.com']
-ALLOWED_ORIGINS = ['http://localhost']
+# ALLOWED_ORIGINS = ['http://localhost']
 
 @app.before_request
 def block_external_requests():
