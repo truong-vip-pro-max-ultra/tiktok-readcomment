@@ -36,7 +36,6 @@ ALLOWED_ORIGINS = ['https://livestreamvoice.com']
 
 @app.before_request
 def block_external_requests():
-    print(request.path)
     if (request.path in ('/', '/youtube', '/facebook', '')
             or ('/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
                 '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/') in request.path):
