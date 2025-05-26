@@ -117,7 +117,7 @@ def get_comment(username):
                     else:
                         comment = old_comment_tiktok[username]
                 else:
-                    utils.save_speech(comment, mp3_path)
+                    utils.save_speech('cái địt mẹ chúng mày', mp3_path)
         else:
             comment = old_comment_tiktok[username]
 
