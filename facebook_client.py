@@ -107,7 +107,7 @@ def get_new_comment(post_url, feedback_id):
         comment = node['preferred_body']['text']
         return author+': '+comment
     except:
-        return 'null'
+        return 'Đang khởi tạo'
 
 
 def start_client_fb(username):
