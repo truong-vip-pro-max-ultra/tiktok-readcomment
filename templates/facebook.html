@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Tiêu đề trang -->
-  <title>Đọc comment livestream TikTok - Công cụ tương tác trực tuyến</title>
+  <title>Đọc comment livestream Facebook - Công cụ tương tác trực tuyến</title>
 
   <!-- Mô tả trang -->
-  <meta name="description" content="Công cụ miễn phí giúp bạn đọc comment từ TikTok Live, tự động phản hồi và gửi lời cảm ơn tới người xem.">
+  <meta name="description" content="Công cụ miễn phí giúp bạn đọc comment từ Facebook Live, tự động phản hồi và gửi lời cảm ơn tới người xem.">
 
   <!-- Thẻ Open Graph cho mạng xã hội -->
-  <meta property="og:title" content="Đọc comment livestream TikTok - Công cụ tương tác trực tuyến">
-  <meta property="og:description" content="Công cụ miễn phí giúp bạn đọc comment từ TikTok Live, tự động phản hồi và gửi lời cảm ơn tới người xem.">
+  <meta property="og:title" content="Đọc comment livestream Facebook - Công cụ tương tác trực tuyến">
+  <meta property="og:description" content="Công cụ miễn phí giúp bạn đọc comment từ Facebook Live, tự động phản hồi và gửi lời cảm ơn tới người xem.">
   <meta property="og:image" content="https://cdn4.iconfinder.com/data/icons/remains/100/facebook_live_icon-2-512.png">
   <meta property="og:url" content="https://livestreamvoice.com">
   <meta property="og:type" content="website">
@@ -20,10 +20,10 @@
 
   <!-- Thẻ Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Đọc comment livestream TikTok - Công cụ tương tác trực tuyến">
-  <meta name="twitter:description" content="Công cụ miễn phí giúp bạn đọc comment từ TikTok Live, tự động phản hồi và gửi lời cảm ơn tới người xem.">
+  <meta name="twitter:title" content="Đọc comment livestream Facebook - Công cụ tương tác trực tuyến">
+  <meta name="twitter:description" content="Công cụ miễn phí giúp bạn đọc comment từ Facebook Live, tự động phản hồi và gửi lời cảm ơn tới người xem.">
   <meta name="twitter:image" content="https://cdn4.iconfinder.com/data/icons/remains/100/facebook_live_icon-2-512.png">
-  <meta name="google-site-verification" content="F-cYZK7MjMc8cMyQbP4THvTMHCkbxse8Gm942LuNYk0" />
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://cdn4.iconfinder.com/data/icons/remains/100/facebook_live_icon-2-512.png">
 
@@ -45,17 +45,16 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Đọc comment livestream TikTok",
+    "name": "Đọc comment livestream Facebook",
     "url": "https://livestreamvoice.com",
     "applicationCategory": "Utility",
     "operatingSystem": "All",
-    "description": "Công cụ miễn phí giúp bạn đọc comment từ TikTok Live, tự động phản hồi và gửi lời cảm ơn tới người xem.",
+    "description": "Công cụ miễn phí giúp bạn đọc comment từ Facebook Live, tự động phản hồi và gửi lời cảm ơn tới người xem.",
     "image": "https://cdn4.iconfinder.com/data/icons/remains/100/facebook_live_icon-2-512.png"
   }
   </script>
 </head>
-
-     <style>
+    <style>
       /* Gradient động */
       @keyframes gradientShift {
         0% { background-position: 0% 50%; }
@@ -88,7 +87,6 @@
       .btn-modern:hover i {
         transform: translateX(6px) scale(1.2);
       }
-
       @keyframes gradientShift {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -99,6 +97,7 @@
         background-size: 200% 200%;
         animation: gradientShift 3s ease infinite;
       }
+
       #musicWave {
           position: absolute;
           top: 0;
@@ -121,6 +120,7 @@
           {#background-color: rgba(31, 41, 55, 0.6); /* Tailwind's bg-gray-700 + opacity */#}
           {#overflow-y: auto;#}
       }
+
       .btn-copy-obs {
           display: inline-flex;
           align-items: center;
@@ -152,134 +152,89 @@
     </style>
 
     <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+
 {#        <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md text-center">#}
-        <div class="bg-none p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
-
-        <h1 class="text-3xl font-extrabold mb-8 bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400
+            <div class="bg-none p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
+            <h1 class="text-3xl font-extrabold mb-8 bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400
                    bg-clip-text text-transparent drop-shadow-lg animate-gradient">
-          ĐỌC COMMENT LIVESTREAM TIKTOK
-        </h1>
+              ĐỌC COMMENT LIVESTREAM FACEBOOK
+            </h1>
 
-        <label for="username" class="block text-left text-sm mb-2">Nhập TikTok username (không có @):</label>
-{#        <input type="text" id="username" class="w-full px-4 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="ví dụ: nguyenvana" />#}
-        <input type="text" id="username" class="w-full px-4 py-2 rounded-md border border-gray-600 bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="ví dụ: nguyenvana" />
+            <label for="username" class="block text-left text-sm mb-2">Nhập Link Facebook:</label>
+{#            <input type="text" id="username" class="w-full px-4 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="ví dụ: https://www.facebook.com/watch?v=CUyoRAP9te0&ab_channel=MixiGaming" />#}
+            <input type="text" id="username" class="w-full px-4 py-2 rounded-md border border-gray-600 bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="ví dụ: https://www.facebook.com/LienquanMobile/videos/634682809019140" />
 
+            <button id="startButton" onclick="startClient()"
+                    class="btn-modern mt-5 w-full text-white font-bold py-3 px-6 rounded-2xl flex items-center justify-center gap-3 select-none shadow-lg relative overflow-hidden">
+              <i class="fas fa-rocket"></i>
+              Start
+            </button>
 
-{#        <div class="bg-gray-800 mt-5 p-6 rounded-xl shadow-md border border-gray-600 hover:border-sky-400 transition-all duration-300">#}
-          <div class="bg-none mt-5 p-6 rounded-xl shadow-md border border-gray-600 hover:border-sky-400 transition-all duration-300">
-          <div class="grid grid-cols-2 gap-6">
-            <!-- Reply -->
-            <div class="flex items-center justify-between">
-              <label for="enableReply" class="text-white text-sm flex items-center gap-2">
-                <i class="fas fa-reply text-sky-400"></i>AI tự động trả lời comment
-              </label>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" id="enableReply" class="sr-only peer">
-                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-lime-500 transition-all duration-300"></div>
-                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-full"></div>
-              </label>
+            <h2 class="text-xl font-semibold mt-2 text-pink-300">Danh sách comment</h2>
+{#            <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>#}
+
+{#            <div class="relative mt-2 h-48 overflow-y-auto rounded-md">#}
+{#              <canvas id="musicWave" class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none z-0"></canvas>#}
+{#              <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>#}
+{#            </div>#}
+
+            <div class="relative mt-2 h-48 overflow-y-auto rounded-md">
+              <canvas id="musicWave" class="absolute top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+              <div id="comment" class="bg-none p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line z-10"></div>
             </div>
 
-            <!-- Like -->
-            <div class="flex items-center justify-between">
-              <label for="enableLike" class="text-white text-sm flex items-center gap-2">
-                <i class="fas fa-heart text-red-400"></i> Cảm ơn thả tim
-              </label>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" id="enableLike" class="sr-only peer" checked>
-                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-purple-500 transition-all duration-300"></div>
-                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-full"></div>
-              </label>
-            </div>
+            <audio id="player" controls autoplay hidden></audio>
 
-            <!-- Comment -->
-            <div class="flex items-center justify-between">
-              <label for="enableCmt" class="text-white text-sm flex items-center gap-2">
-                <i class="fas fa-comment-dots text-pink-400"></i> Đọc comment
-              </label>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" id="enableCmt" class="sr-only peer" checked>
-                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-pink-500 transition-all duration-300"></div>
-                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-full"></div>
-              </label>
-            </div>
+           <button id="yt" onclick="copyStreamSourceOBS()"
+                    class="btn-copy-obs mt-5 mx-auto">
+              <i class="fas fa-copy"></i>
+              Copy OBS Source
+           </button>
 
-            <!-- Gift -->
-            <div class="flex items-center justify-between">
-              <label for="enableGift" class="text-white text-sm flex items-center gap-2">
-                <i class="fas fa-gift text-yellow-400"></i> Cảm ơn tặng quà
-              </label>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" id="enableGift" class="sr-only peer" checked>
-                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-sky-400 transition-all duration-300"></div>
-                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-full"></div>
-              </label>
-            </div>
-          </div>
-        </div>
-
-
-        <button id="startButton" onclick="startClient()" class="btn-modern mt-5 w-full text-white font-bold py-3 px-6 rounded-2xl flex items-center justify-center gap-3 select-none shadow-lg relative overflow-hidden">
-          <i class="fas fa-rocket"></i>
-          Start
-        </button>
-        <h2 class="text-xl font-semibold mt-2 text-pink-300">Danh sách comment</h2>
-{#        <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>#}
-
-{#        <div class="relative mt-2 h-48 overflow-y-auto rounded-md">#}
-{#          <canvas id="musicWave" class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none z-0"></canvas>#}
-{#          <div id="comment" class="mt-2 bg-gray-700 p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line"></div>#}
-{#        </div>#}
-         <div class="relative mt-2 h-48 overflow-y-auto rounded-md">
-          <canvas id="musicWave" class="absolute top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
-          <div id="comment" class="bg-none p-4 rounded-md h-48 overflow-y-auto text-left whitespace-pre-line z-10"></div>
-         </div>
-
-        <audio id="player" controls autoplay hidden></audio>
-
-        <button id="yt" onclick="copyStreamSourceOBS()"
-        class="btn-copy-obs mt-5 mx-auto">
-          <i class="fas fa-copy"></i>
-          Copy OBS Source
-        </button>
-
-{#         <button id="yt" onclick="window.location.href='/facebook'"#}
-{#                class="mt-5 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">#}
-{#            Phiên bản Facebook#}
-{#        </button>#}
+{#            <button id="yt" onclick="window.location.href='/'"#}
+{#                    class="mt-5 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">#}
+{#                Phiên bản TikTok#}
+{#            </button>#}
 {##}
-{#        <button id="yt" onclick="window.location.href='/youtube'"#}
-{#                class="mt-5 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">#}
-{#            Phiên bản Youtube#}
-{#        </button>#}
+{#            <button id="yt" onclick="window.location.href='/youtube'"#}
+{#                    class="mt-5 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">#}
+{#                Phiên bản Youtube#}
+{#            </button>#}
 
-         <div class="flex justify-center gap-4 mt-5 flex-wrap">
-             <!-- Nút Facebook -->
-              <a href="/facebook"
-                 class="flex items-center gap-2 px-2 py-2 bg-blue-700 text-white text-sm font-medium rounded-lg shadow hover:scale-105 transition-transform duration-300">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 320 512">
-                  <path d="M279.14 288l14.22-92.66h-88.91V138.33c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.54 0 225.36 0c-73.22 0-121.14 44.38-121.14 124.72v70.62H22.89V288h81.33v224h100.2V288z"/>
-                </svg>
-                Phiên Bản Facebook
-              </a>
-              <!-- Nút YouTube -->
-              <a href="/youtube"
-                 class="flex items-center gap-2 px-2 py-2 bg-red-600 text-white text-sm font-medium rounded-lg shadow hover:scale-105 transition-transform duration-300">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 576 512">
-                  <path d="M549.7 124.1c-6.3-23.8-25-42.5-48.9-48.8C458.5 64 288 64 288 64S117.5 64 75.2 75.3c-23.9 6.3-42.6 25-48.9 48.8C16 167.5 16 256 16 256s0 88.5 10.3 131.9c6.3 23.8 25 42.5 48.9 48.8C117.5 448 288 448 288 448s170.5 0 212.8-11.3c23.9-6.3 42.6-25 48.9-48.8C560 344.5 560 256 560 256s0-88.5-10.3-131.9zM232 336V176l142.7 80L232 336z"/>
-                </svg>
-                Phiên Bản YouTube
-              </a>
-           </div>
 
-         <div class="mt-2 w-full">
-            <a id="contact" href="https://t.me/truongjae" target="_blank" class="text-white hover:underline">
-                Contact me on Telegram: @truongjae
-            </a>
-         </div>
+               <div class="flex justify-center gap-4 mt-5 flex-wrap">
+                  <!-- Nút TikTok -->
+                  <a href="/"
+                     class="flex items-center gap-2 px-2 py-2 bg-gradient-to-r from-pink-500 to-blue-500 text-white text-sm font-medium rounded-lg shadow hover:scale-105 transition-transform duration-300">
+                       <svg class="w-5 h-5" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                      <path d="M232 64.005a71.573 71.573 0 01-41.51-13.16 72.234 72.234 0 01-14.68-13.71 71.87 71.87 0 01-14.81-43.14H128v165.86a23.99 23.99 0 11-24-24c.34 0 .67.01 1 .02V98.35A74.313 74.313 0 0023.79 172.67 74.313 74.313 0 0098.11 247a74.313 74.313 0 0073.73-73.32V93.79a119.2 119.2 0 0060.16 16.22v-45.97z" />
+                    </svg>
+                    Phiên Bản TikTok
+                  </a>
+
+                  <!-- Nút YouTube -->
+                  <a href="/youtube"
+                     class="flex items-center gap-2 px-2 py-2 bg-red-600 text-white text-sm font-medium rounded-lg shadow hover:scale-105 transition-transform duration-300">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 576 512">
+                      <path d="M549.7 124.1c-6.3-23.8-25-42.5-48.9-48.8C458.5 64 288 64 288 64S117.5 64 75.2 75.3c-23.9 6.3-42.6 25-48.9 48.8C16 167.5 16 256 16 256s0 88.5 10.3 131.9c6.3 23.8 25 42.5 48.9 48.8C117.5 448 288 448 288 448s170.5 0 212.8-11.3c23.9-6.3 42.6-25 48.9-48.8C560 344.5 560 256 560 256s0-88.5-10.3-131.9zM232 336V176l142.7 80L232 336z"/>
+                    </svg>
+                    Phiên Bản YouTube
+                  </a>
+               </div>
+
+
+             <div class="mt-2 w-full">
+                <a id="contact" href="https://t.me/truongjae" target="_blank" class="text-white hover:underline">
+                    Contact me on Telegram: @truongjae
+                </a>
+             </div>
         </div>
 
         <script>
+            function base64UrlEncode(str) {
+              let base64 = btoa(str);
+              return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+            }
             let currentComment = "";
             let username = "";
 
@@ -304,9 +259,13 @@
                     analyzer.fftSize = 256;
                 }
                 const button = document.getElementById("startButton");
-                username = document.getElementById("username").value.trim().toLowerCase();
+                button.innerText = "Đang Đọc...";
+                button.disabled = true;
+                button.classList.add("opacity-50", "cursor-not-allowed");
+
+                username = document.getElementById("username").value.trim();
                 if (!username) {
-                    showError("Vui lòng nhập username");
+                    showError("Vui lòng nhập link");
                     button.innerHTML = `<i class="fas fa-rocket"></i>Start`;
                     button.disabled = false;
                     button.classList.remove("opacity-50", "cursor-not-allowed");
@@ -318,12 +277,12 @@
                     button.disabled = true;
                     button.classList.add("opacity-50", "cursor-not-allowed");
 
-                    const check_live = await fetch(`/tiktok/check/${username}`);
+                    const check_live = await fetch(`/facebook/check/${base64UrlEncode(username)}`);
                     if (check_live.status === 400) {
                         button.innerHTML = `<i class="fas fa-rocket"></i>Start`;
                         button.disabled = false;
                         button.classList.remove("opacity-50", "cursor-not-allowed");
-                        showError(`${username} không đúng hoặc không livestream`);
+                        showError(`Link không đúng hoặc không livestream`);
                         return;
                     } else if (!check_live.ok) {
                         button.innerHTML = `<i class="fas fa-rocket"></i>Start`;
@@ -340,14 +299,14 @@
                 }
 
                 // Gửi request bắt đầu
-                await fetch("/tiktok/start", {
+                await fetch("/facebook/start", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username })
                 });
 
                 // Xử lý audio "dọn đường" cho mobile
-                //const audio = document.getElementById("player");
+                // const audio = document.getElementById("player");
                 try {
                     audio.src = ""; // Làm sạch
                     await audio.play();
@@ -358,19 +317,19 @@
                     console.warn("Trình duyệt không cho phép phát audio tự động:", err);
                 }
 
-
                 button.innerText = "Đang Đọc...";
                 button.disabled = true;
                 button.classList.add("opacity-50", "cursor-not-allowed");
+
                 // Gọi lần đầu
                 fetchComment();
             }
 
             function copyStreamSourceOBS(){
                 const host = window.location.host;
-                const username = document.getElementById("username").value.trim();
+                const urlEncode = document.getElementById("username").value.trim();
 
-                navigator.clipboard.writeText(host+'/tiktok/widget/'+username)
+                navigator.clipboard.writeText(host+'/facebook/widget/'+base64UrlEncode(urlEncode))
                   .then(() => {
                     showSuccess("Đã copy vào clipboard!");
                   })
@@ -388,51 +347,24 @@
 
             async function fetchComment() {
                 try {
-                    /*const enableReply = document.getElementById('enableReply');
 
-                    const res = await fetch(`/tiktok/comment/${username}?reply=${enableReply.checked}`);*/
-
-                    const formData = new FormData();
-
-                    if (document.getElementById("enableReply").checked) {
-                        formData.append("reply", "1");
-                    }
-                    if (document.getElementById("enableLike").checked) {
-                        formData.append("like", "1");
-                    }
-                    if (document.getElementById("enableCmt").checked) {
-                        formData.append("cmt", "1");
-                    }
-                    if (document.getElementById("enableGift").checked) {
-                        formData.append("gift", "1");
-                    }
-
-                    const res = await fetch(`/tiktok/comment/${username}`, {
-                        method: "POST",
-                        body: formData
-                    });
-
+                    const res = await fetch(`/facebook/comment/${base64UrlEncode(username)}`)
                     const data = await res.json();
                     if (data.latest_comment == "" && currentComment != "") {
-                         await fetch("/tiktok/start", {
+                        await fetch("/facebook/start", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ username })
                         });
                     }
-
-                    if (data.latest_comment && data.latest_comment !== currentComment) {
+                    if (data.latest_comment && data.latest_comment != "" && data.latest_comment !== currentComment) {
                         currentComment = data.latest_comment;
 
                         const commentBox = document.getElementById("comment");
                         commentBox.innerText += currentComment + '\n';
                         commentBox.scrollTop = commentBox.scrollHeight;
 
-                        //const audio = document.getElementById("player");
-                        audio.src = `/tiktok/audio/${username}?t=${Date.now()}`;
-                        //audio.load();
-                        // audio.playbackRate = 1.5;
-                        //await waitForAudioLoad(audio);
+                        audio.src = `/facebook/audio/${base64UrlEncode(username)}?t=${Date.now()}`;
 
                         audio.onended = () => {
                             fetchComment();
@@ -482,32 +414,31 @@
                         setTimeout(fetchComment, 1000);
                     }
                 } catch (err) {
-                    showError("Lỗi khi fetch hoặc phát audio!");
+                    console.error("Lỗi khi fetch hoặc phát audio:", err);
                     setTimeout(fetchComment, 1000);
                 }
             }
 
         </script>
 
-    <div id="vanta-bg" style="width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: -1;"></div>
-    <script>
-      VANTA.NET({
-        el: "#vanta-bg",
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        color: 0xff3f81,
-        backgroundColor: 0x0d0d0d,
-        points: 12.00,
-        maxDistance: 20.00,
-        spacing: 15.00
-      });
-    </script>
-
+        <div id="vanta-bg" style="width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: -1;"></div>
+        <script>
+          VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xff3f81,
+            backgroundColor: 0x0d0d0d,
+            points: 12.00,
+            maxDistance: 20.00,
+            spacing: 15.00
+          });
+        </script>
 
 
     <div id="errorPopup" class="fixed top-2 right-2 z-50 hidden bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg animate-slide-in flex items-center gap-3">
@@ -525,8 +456,6 @@
         <i class="fas fa-times"></i>
       </button>
     </div>
-
-
     <style>
       @keyframes slideIn {
         from {
@@ -543,7 +472,7 @@
       }
     </style>
 
-    <script>
+     <script>
       function showError(message) {
         const popup = document.getElementById("errorPopup");
         const msg = document.getElementById("errorMessage");
@@ -557,7 +486,7 @@
         }, 4000);
       }
 
-       function showSuccess(message) {
+      function showSuccess(message) {
         const popup = document.getElementById("successPopup");
         const msg = document.getElementById("successMessage");
 
@@ -581,7 +510,6 @@
       }
 
     </script>
-
 
     </body>
     </html>

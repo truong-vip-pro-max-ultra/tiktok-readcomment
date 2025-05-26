@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Youtube Widget</title>
+  <title>TikTok Widget</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
   <style>
     html, body {
@@ -163,7 +163,7 @@
 
 
         async function startClient(username){
-          return await fetch("/youtube/start", {
+          return await fetch("/tiktok/start", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username })
@@ -173,7 +173,7 @@
         const container = document.getElementById('comment-container');
         let currentComment = "";
 
-        const username = '{{ url }}';
+        const username = '{{ username }}';
 
         const resStartClient = await startClient(username);
         if (resStartClient.ok){
@@ -209,7 +209,7 @@
 
             const autoFetch = setInterval(async () => {
               try {
-                const res = await fetch(`/youtube/comment/widget/${base64UrlEncode(username)}`)
+                const res = await fetch(`/tiktok/comment/widget/${username}`);
                 const data = await res.json();
                 if (data.latest_comment == "" && currentComment != "") {
                   const res = await startClient(username);

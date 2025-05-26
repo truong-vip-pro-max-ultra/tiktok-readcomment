@@ -134,7 +134,7 @@ def cleanup_inactive_clients(timeout_seconds=10):
         print(f"🛑 Tắt Youtube client cho {username} vì không hoạt động > {timeout_seconds}s")
         stop_client(username)
 
-def start_cleanup_thread_yt(interval=15, timeout_seconds=60):
+def start_cleanup_thread_yt(interval=20, timeout_seconds=60):
     def run():
         while True:
             cleanup_inactive_clients(timeout_seconds)

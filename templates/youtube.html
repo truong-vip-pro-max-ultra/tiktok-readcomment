@@ -120,6 +120,34 @@
           {#background-color: rgba(31, 41, 55, 0.6); /* Tailwind's bg-gray-700 + opacity */#}
           {#overflow-y: auto;#}
       }
+      .btn-copy-obs {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 0.5rem 1rem;
+          background: linear-gradient(135deg, #f43f5e, #ec4899);
+          color: white;
+          font-weight: 600;
+          font-size: 0.875rem;
+          border-radius: 9999px; /* full rounded */
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4);
+      }
+
+        .btn-copy-obs:hover {
+          transform: scale(1.05);
+          box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+          background: linear-gradient(135deg, #ec4899, #f43f5e);
+        }
+
+        .btn-copy-obs i {
+          transition: transform 0.3s ease;
+        }
+
+        .btn-copy-obs:hover i {
+          transform: scale(1.2) rotate(5deg);
+        }
     </style>
 
     <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
@@ -156,15 +184,40 @@
 
             <audio id="player" controls autoplay hidden></audio>
 
-            <button id="yt" onclick="copyStreamSourceOBS()"
-                    class="mt-5 w-full bg-pink-600 hover:bg-pink-800 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">
-                Copy stream source OBS
-            </button>
+           <button id="yt" onclick="copyStreamSourceOBS()"
+            class="btn-copy-obs mt-5 mx-auto">
+              <i class="fas fa-copy"></i>
+              Copy OBS Source
+           </button>
 
-            <button id="yt" onclick="window.location.href='/'"
-                    class="mt-5 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">
-                Phiên bản TikTok
-            </button>
+{#            <button id="yt" onclick="window.location.href='/'"#}
+{#                    class="mt-5 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">#}
+{#                Phiên bản TikTok#}
+{#            </button>#}
+{##}
+{#            <button id="yt" onclick="window.location.href='/facebook'"#}
+{#                    class="mt-5 w-full bg-blue-500 hover:bg-green-600 transition-colors text-white font-semibold py-2 px-4 rounded-lg shadow-md">#}
+{#                Phiên bản Facebook#}
+{#            </button>#}
+                <div class="flex justify-center gap-4 mt-5 flex-wrap">
+                  <!-- Nút TikTok -->
+                  <a href="/"
+                     class="flex items-center gap-2 px-2 py-2 bg-gradient-to-r from-pink-500 to-blue-500 text-white text-sm font-medium rounded-lg shadow hover:scale-105 transition-transform duration-300">
+                       <svg class="w-5 h-5" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                      <path d="M232 64.005a71.573 71.573 0 01-41.51-13.16 72.234 72.234 0 01-14.68-13.71 71.87 71.87 0 01-14.81-43.14H128v165.86a23.99 23.99 0 11-24-24c.34 0 .67.01 1 .02V98.35A74.313 74.313 0 0023.79 172.67 74.313 74.313 0 0098.11 247a74.313 74.313 0 0073.73-73.32V93.79a119.2 119.2 0 0060.16 16.22v-45.97z" />
+                    </svg>
+                    Phiên Bản TikTok
+                  </a>
+
+                   <!-- Nút Facebook -->
+                  <a href="/facebook"
+                     class="flex items-center gap-2 px-2 py-2 bg-blue-700 text-white text-sm font-medium rounded-lg shadow hover:scale-105 transition-transform duration-300">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 320 512">
+                      <path d="M279.14 288l14.22-92.66h-88.91V138.33c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.54 0 225.36 0c-73.22 0-121.14 44.38-121.14 124.72v70.62H22.89V288h81.33v224h100.2V288z"/>
+                    </svg>
+                    Phiên Bản Facebook
+                  </a>
+               </div>
 
              <div class="mt-2 w-full">
                 <a id="contact" href="https://t.me/truongjae" target="_blank" class="text-white hover:underline">
@@ -274,7 +327,7 @@
 
                 navigator.clipboard.writeText(host+'/youtube/widget/'+base64UrlEncode(urlEncode))
                   .then(() => {
-                    console.log("Đã copy vào clipboard!");
+                    showSuccess("Đã copy vào clipboard!");
                   })
                   .catch(err => {
                     console.error("Lỗi khi copy vào clipboard:", err);
@@ -304,7 +357,7 @@
                             body: JSON.stringify({ username })
                         });
                     }
-                    if (data.latest_comment && data.latest_comment !== currentComment) {
+                    if (data.latest_comment && data.latest_comment != "" && data.latest_comment !== currentComment) {
                         currentComment = data.latest_comment;
 
                         const commentBox = document.getElementById("comment");

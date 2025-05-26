@@ -5,8 +5,10 @@ from tiktok_client import (start_client,
                            is_live_stream,
                            enable_likes,
                            enable_comments,
-                           enable_gifts)
-from youtube_client import start_client_yt, get_latest_comment_yt, start_cleanup_thread_yt, get_live_chat
+                           enable_gifts,
+                           latest_comments)
+from youtube_client import start_client_yt, get_latest_comment_yt, start_cleanup_thread_yt, get_live_chat, latest_comments as lastest_comments_youtube
+from facebook_client import start_client_fb, get_latest_comment_fb, start_cleanup_thread_fb, get_feedback_id, latest_comments as lastest_comments_facebook
 import os
 from gtts import gTTS
 from threading import Lock
@@ -17,13 +19,17 @@ app = Flask(__name__)
 
 comment_lock_tiktok = Lock()
 comment_lock_youtube = Lock()
+comment_lock_facebook = Lock()
 audio_dir_tiktok = "audio_files_tiktok"
 audio_dir_youtube = "audio_files_youtube"
+audio_dir_facebook = "audio_files_facebook"
 os.makedirs(audio_dir_tiktok, exist_ok=True)
 os.makedirs(audio_dir_youtube, exist_ok=True)
+os.makedirs(audio_dir_facebook, exist_ok=True)
 
 old_comment_tiktok = {}
 old_comment_youtube = {}
+old_comment_facebook = {}
 
 ALLOWED_ORIGINS = ['https://livestreamvoice.com']
 # ALLOWED_ORIGINS = ['http://localhost']
@@ -50,7 +56,9 @@ def index():
 @app.route("/youtube")
 def youtube():
     return render_template("youtube.html")
-
+@app.route("/facebook")
+def facebook():
+    return render_template("facebook.html")
 @app.route("/tiktok/check/<username>", methods=["GET"])
 def check_is_live_stream(username):
     if not username:
@@ -113,6 +121,13 @@ def get_comment(username):
 
     return jsonify({"username": username, "latest_comment": comment, "audio_url": audio_url})
 
+@app.route("/tiktok/comment/widget/<username>")
+def get_comment_widget(username):
+    try:
+        comment = latest_comments[username]
+        return jsonify({"username": username, "latest_comment": comment, "audio_url": ''})
+    except:
+        return jsonify({"username": username, "latest_comment": 'Đang khởi tạo'})
 
 
 @app.route("/tiktok/audio/<username>")
@@ -124,6 +139,10 @@ def get_audio_tiktok(username):
         # return send_file(mp3_path, mimetype="audio/mpeg")
         return send_file(mp3_path, mimetype="audio/wav")
     return jsonify({"error": "No audio found"}), 404
+
+@app.route("/tiktok/widget/<username>")
+def tiktok_widget(username):
+    return render_template("tiktok_widget.html", username = username)
 
 ## yt
 @app.route("/youtube/check/<url_encode>", methods=["GET"])
@@ -142,7 +161,6 @@ def start_youtube():
     if not username:
         return jsonify({"error": "Missing username"}), 400
 
-    get_live_chat(username)
     start_client_yt(username)
     return jsonify({"message": f"Started Youtube client for {username}"}), 200
 
@@ -157,7 +175,7 @@ def get_comment_youtube(url_encode):
     comment = get_latest_comment_yt(url)
     audio_url = url_for('get_audio_youtube', url_encode=url_encode)
     # filename = utils.convert_username_youtube(username) + ".mp3"
-    filename = utils.convert_username_youtube(url) + ".wav"
+    filename = utils.convert_url_to_username(url) + ".wav"
     if comment:
         if url in old_comment_youtube.keys():
             if old_comment_youtube[url] != comment:
@@ -181,11 +199,19 @@ def get_comment_youtube(url_encode):
 
     return jsonify({"username": url, "latest_comment": comment, "audio_url": audio_url})
 
+@app.route("/youtube/comment/widget/<url_encode>")
+def get_comment_widget_youtube(url_encode):
+    try:
+        url = utils.base64UrlDecode(url_encode)
+        comment = lastest_comments_youtube[url]
+        return jsonify({"username": url, "latest_comment": comment, "audio_url": ''})
+    except:
+        return jsonify({"username": url, "latest_comment": 'Đang khởi tạo'})
 @app.route("/youtube/audio/<url_encode>")
 def get_audio_youtube(url_encode):
     url = utils.base64UrlDecode(url_encode)
     # filename = utils.convert_username_youtube(username) + ".mp3"
-    filename = utils.convert_username_youtube(url) + ".wav"
+    filename = utils.convert_url_to_username(url) + ".wav"
     mp3_path = os.path.join(audio_dir_youtube, filename)
     if os.path.exists(mp3_path):
         utils.change_speed(mp3_path,mp3_path, 1.3)
@@ -200,7 +226,79 @@ def youtube_widget(url_encode):
     return render_template("youtube_widget.html", url = url)
 
 
+## fb
+@app.route("/facebook/check/<url_encode>", methods=["GET"])
+def check_is_live_stream_facebook(url_encode):
+    url = utils.base64UrlDecode(url_encode)
+    if not url:
+        return jsonify({"error": "Missing url"}), 400
+    check = get_feedback_id(url)
+    if check != '':
+        return jsonify({"message": f"Started Facebook client for {url}"}), 200
+    return jsonify({"error": f"{url} not live"}), 400
+
+@app.route("/facebook/start", methods=["POST"])
+def start_facebook():
+    username = request.json.get("username")
+    if not username:
+        return jsonify({"error": "Missing username"}), 400
+
+    start_client_fb(username)
+    return jsonify({"message": f"Started Facebook client for {username}"}), 200
+
+@app.route("/facebook/comment/<url_encode>")
+def get_comment_facebook(url_encode):
+    url = utils.base64UrlDecode(url_encode)
+    if not url:
+        return jsonify({"error": "Missing username"}), 400
+
+    has_new_comment = False
+
+    comment = get_latest_comment_fb(url)
+    audio_url = url_for('get_audio_facebook', url_encode=url_encode)
+    filename = utils.convert_url_to_username(url) + ".wav"
+    if comment:
+        if url in old_comment_facebook.keys():
+            if old_comment_facebook[url] != comment and comment != 'null':
+                old_comment_facebook[url] = comment
+                has_new_comment = True
+        else:
+            old_comment_facebook[url] = comment
+
+        if has_new_comment:
+            with comment_lock_facebook:
+                mp3_path = os.path.join(audio_dir_facebook, filename)
+                utils.save_speech(comment, mp3_path)
+        else:
+            comment = old_comment_facebook[url]
+
+    return jsonify({"username": url, "latest_comment": comment, "audio_url": audio_url})
+
+@app.route("/facebook/comment/widget/<url_encode>")
+def get_comment_widget_facebook(url_encode):
+    try:
+        url = utils.base64UrlDecode(url_encode)
+        comment = lastest_comments_facebook[url]
+        return jsonify({"username": url, "latest_comment": comment, "audio_url": ''})
+    except:
+        return jsonify({"username": url, "latest_comment": 'Đang khởi tạo'})
+@app.route("/facebook/audio/<url_encode>")
+def get_audio_facebook(url_encode):
+    url = utils.base64UrlDecode(url_encode)
+    filename = utils.convert_url_to_username(url) + ".wav"
+    mp3_path = os.path.join(audio_dir_facebook, filename)
+    if os.path.exists(mp3_path):
+        utils.change_speed(mp3_path,mp3_path, 1.3)
+        return send_file(mp3_path, mimetype="audio/wav")
+    return jsonify({"error": "No audio found"}), 404
+
+@app.route("/facebook/widget/<url_encode>")
+def facebook_widget(url_encode):
+    url = utils.base64UrlDecode(url_encode)
+    return render_template("facebook_widget.html", url = url)
+
 if __name__ == "__main__":
     start_cleanup_thread()
     start_cleanup_thread_yt()
+    start_cleanup_thread_fb()
     app.run(debug=True, host='0.0.0.0', port=80)

@@ -18,9 +18,9 @@ def change_speed(input_file, output_file, speed_factor):
     # sf.write(output_file, adjusted_audio, sample_rate)
     pass
 
-def convert_username_youtube(username):
-    username = re.sub(r'\W+', '', username)
-    return username
+def convert_url_to_username(url):
+    url = re.sub(r'\W+', '', url)
+    return url
 def cut_string(string, start, end):
     try:
         return string.split(start)[1].split(end)[0]
