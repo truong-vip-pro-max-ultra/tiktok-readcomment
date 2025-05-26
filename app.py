@@ -34,20 +34,20 @@ old_comment_facebook = {}
 ALLOWED_ORIGINS = ['https://livestreamvoice.com']
 # ALLOWED_ORIGINS = ['http://localhost']
 
-@app.before_request
-def block_external_requests():
-    if (request.path in ('/', '/youtube', '/facebook', '')
-            or request.path.startswith(('/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
-                '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/'))):
-        return
-    origin = request.headers.get('Origin')
-    referer = request.headers.get('Referer')
-
-    if origin and origin not in ALLOWED_ORIGINS:
-        abort(403)
-
-    if referer and not referer.startswith(tuple(ALLOWED_ORIGINS)):
-        abort(403)
+# @app.before_request
+# def block_external_requests():
+#     if (request.path in ('/', '/youtube', '/facebook', '')
+#             or request.path.startswith(('/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
+#                 '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/'))):
+#         return
+#     origin = request.headers.get('Origin')
+#     referer = request.headers.get('Referer')
+#
+#     if origin and origin not in ALLOWED_ORIGINS:
+#         abort(403)
+#
+#     if referer and not referer.startswith(tuple(ALLOWED_ORIGINS)):
+#         abort(403)
 
 @app.errorhandler(404)
 def page_not_found(e):
