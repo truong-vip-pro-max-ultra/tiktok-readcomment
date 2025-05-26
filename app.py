@@ -32,11 +32,14 @@ old_comment_youtube = {}
 old_comment_facebook = {}
 
 ALLOWED_ORIGINS = ['https://livestreamvoice.com']
-# ALLOWED_ORIGINS = ['http://localhost']
+ALLOWED_ORIGINS = ['http://localhost']
 
 @app.before_request
 def block_external_requests():
-    if request.path == '/' or request.path == '/youtube':
+    print(request.path)
+    if (request.path in ('/', '/youtube', '/facebook', '')
+            or ('/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
+                '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/') in request.path):
         return
     origin = request.headers.get('Origin')
     referer = request.headers.get('Referer')
