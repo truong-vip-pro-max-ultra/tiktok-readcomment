@@ -33,8 +33,9 @@ old_comment_facebook = {}
 
 ALLOWED_ORIGINS = ['https://livestreamvoice.com','http://localhost']
 PATH_ALLOWED_ORIGINS = ['/', '/youtube', '/facebook', '']
-PATH_STARTS_WITH_ORIGINS = ['/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
-                '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/']
+PATH_STARTS_WITH_ORIGINS = ['/tiktok/start', '/facebook/start', '/youtube/start',
+    '/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
+    '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/']
 
 @app.before_request
 def block_external_requests():
