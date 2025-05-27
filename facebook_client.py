@@ -105,7 +105,7 @@ def get_new_comment(post_url, feedback_id):
         node = response.json()['data']['node']['comment_rendering_instance_for_feed_location']['comments']['edges'][0]['node']
         author = node['author']['name']
         comment = node['preferred_body']['text']
-        return author+': '+comment
+        return author+' : '+comment
     except:
         return 'Đang khởi tạo'
 

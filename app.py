@@ -256,8 +256,10 @@ def start_facebook():
     start_client_fb(username)
     return jsonify({"message": f"Started Facebook client for {username}"}), 200
 
-@app.route("/facebook/comment/<url_encode>")
+@app.route("/facebook/comment/<url_encode>", methods=["POST"])
 def get_comment_facebook(url_encode):
+    reply = request.form.get("reply")
+
     url = utils.base64UrlDecode(url_encode)
     if not url:
         return jsonify({"error": "Missing username"}), 400
@@ -278,7 +280,18 @@ def get_comment_facebook(url_encode):
         if has_new_comment:
             with comment_lock_facebook:
                 mp3_path = os.path.join(audio_dir_facebook, filename)
-                utils.save_speech(comment, mp3_path)
+                # utils.save_speech(comment, mp3_path)
+                if reply:
+                    name = utils.cut_string_head(comment, ' : ')
+                    content = utils.cut_string_last(comment, ' : ')
+                    try:
+                        result_ai = ai.copilot(name, content)
+                    except:
+                        result_ai = ai.process_v2(name, content)
+                    answer = comment + " . . . " + result_ai
+                    utils.save_speech(answer, mp3_path)
+                else:
+                    utils.save_speech(comment, mp3_path)
         else:
             comment = old_comment_facebook[url]
 
