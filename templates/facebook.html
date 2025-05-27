@@ -374,14 +374,15 @@
                         body: formData
                     });
                     const data = await res.json();
-                    if (data.latest_comment == "" && currentComment != "") {
+                    if (data.latest_comment == "" && currentComment != "" && currentComment != "init") {
                         await fetch("/facebook/start", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ username })
                         });
                     }
-                    if (data.latest_comment && data.latest_comment != "" && data.latest_comment !== currentComment) {
+                    if (data.latest_comment && data.latest_comment != ""
+                        && data.latest_comment != "init" && data.latest_comment !== currentComment) {
                         currentComment = data.latest_comment;
 
                         const commentBox = document.getElementById("comment");

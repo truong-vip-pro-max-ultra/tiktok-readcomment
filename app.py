@@ -312,8 +312,8 @@ def get_comment_facebook(url_encode):
 
 @app.route("/facebook/comment/widget/<url_encode>")
 def get_comment_widget_facebook(url_encode):
+    url = utils.base64UrlDecode(url_encode)
     try:
-        url = utils.base64UrlDecode(url_encode)
         comment = lastest_comments_facebook[url]
         return jsonify({"username": url, "latest_comment": comment, "audio_url": ''})
     except:
