@@ -174,8 +174,10 @@ def start_youtube():
     start_client_yt(username)
     return jsonify({"message": f"Started Youtube client for {username}"}), 200
 
-@app.route("/youtube/comment/<url_encode>")
+@app.route("/youtube/comment/<url_encode>", methods=["POST"])
 def get_comment_youtube(url_encode):
+    reply = request.form.get("reply")
+
     url = utils.base64UrlDecode(url_encode)
     if not url:
         return jsonify({"error": "Missing username"}), 400
@@ -197,7 +199,18 @@ def get_comment_youtube(url_encode):
         if has_new_comment:
             with comment_lock_youtube:
                 mp3_path = os.path.join(audio_dir_youtube, filename)
-                utils.save_speech(comment, mp3_path)
+                # utils.save_speech(comment, mp3_path)
+                if reply:
+                    name = utils.cut_string_head(comment, ' : ')
+                    content = utils.cut_string_last(comment, ' : ')
+                    try:
+                        result_ai = ai.copilot(name, content)
+                    except:
+                        result_ai = ai.process_v2(name, content)
+                    answer = comment + " . . . " + result_ai
+                    utils.save_speech(answer, mp3_path)
+                else:
+                    utils.save_speech(comment, mp3_path)
         else:
             # comment = ''
             comment = old_comment_youtube[url]
@@ -211,8 +224,8 @@ def get_comment_youtube(url_encode):
 
 @app.route("/youtube/comment/widget/<url_encode>")
 def get_comment_widget_youtube(url_encode):
+    url = utils.base64UrlDecode(url_encode)
     try:
-        url = utils.base64UrlDecode(url_encode)
         comment = lastest_comments_youtube[url]
         return jsonify({"username": url, "latest_comment": comment, "audio_url": ''})
     except:
