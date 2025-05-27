@@ -24,7 +24,8 @@ clients_tasks = {}      # Lưu task chạy client.start()
 
 love = ['yêu lắm luôn', 'moa moa moa', 'dễ thương quá trời ơi', 'cảm ơn rất nhiều', 'ôi trời ơi']
 
-async def is_live_stream(username):
+def is_live_stream(username):
+# async def is_live_stream(username):
     # client = TikTokLiveClient(unique_id=username)
     # try:
     #     return await client.is_live()
