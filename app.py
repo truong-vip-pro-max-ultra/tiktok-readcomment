@@ -31,12 +31,11 @@ old_comment_tiktok = {}
 old_comment_youtube = {}
 old_comment_facebook = {}
 
-ALLOWED_ORIGINS = ['https://livestreamvoice.com']
-# ALLOWED_ORIGINS = ['http://localhost']
-
+ALLOWED_ORIGINS = ['https://livestreamvoice.com','http://localhost']
 PATH_ALLOWED_ORIGINS = ['/', '/youtube', '/facebook', '']
 PATH_STARTS_WITH_ORIGINS = ['/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
                 '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/']
+
 @app.before_request
 def block_external_requests():
     if request.path in PATH_ALLOWED_ORIGINS or utils.check_path_startswith(request.path, PATH_STARTS_WITH_ORIGINS):
