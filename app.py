@@ -32,22 +32,23 @@ old_comment_youtube = {}
 old_comment_facebook = {}
 
 ALLOWED_ORIGINS = ['https://livestreamvoice.com']
-# ALLOWED_ORIGINS = ['http://localhost']
+ALLOWED_ORIGINS = ['http://localhost']
 
-# @app.before_request
-# def block_external_requests():
-#     if (request.path in ('/', '/youtube', '/facebook', '')
-#             or request.path.startswith(('/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
-#                 '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/'))):
-#         return
-#     origin = request.headers.get('Origin')
-#     referer = request.headers.get('Referer')
-#
-#     if origin and origin not in ALLOWED_ORIGINS:
-#         abort(403)
-#
-#     if referer and not referer.startswith(tuple(ALLOWED_ORIGINS)):
-#         abort(403)
+PATH_ALLOWED_ORIGINS = ['/', '/youtube', '/facebook', '']
+PATH_STARTS_WITH_ORIGINS = ['/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
+                '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/']
+@app.before_request
+def block_external_requests():
+    if request.path in PATH_ALLOWED_ORIGINS or utils.check_path_startswith(request.path, PATH_STARTS_WITH_ORIGINS):
+        return
+    origin = request.headers.get('Origin')
+    referer = request.headers.get('Referer')
+
+    if origin and origin not in ALLOWED_ORIGINS:
+        abort(403)
+
+    if referer and not referer.startswith(tuple(ALLOWED_ORIGINS)):
+        abort(403)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -63,9 +64,16 @@ def facebook():
     return render_template("facebook.html")
 @app.route("/tiktok/check/<username>", methods=["GET"])
 def check_is_live_stream(username):
+    # if not username:
+    #     return jsonify({"error": "Missing username"}), 400
+    # check = asyncio.run(is_live_stream(username))
+    # if check:
+    #     return jsonify({"message": f"Started TikTok client for {username}"}), 200
+    # return jsonify({"error": f"{username} not live"}), 400
+
     if not username:
         return jsonify({"error": "Missing username"}), 400
-    check = asyncio.run(is_live_stream(username))
+    check = is_live_stream(username)
     if check:
         return jsonify({"message": f"Started TikTok client for {username}"}), 200
     return jsonify({"error": f"{username} not live"}), 400

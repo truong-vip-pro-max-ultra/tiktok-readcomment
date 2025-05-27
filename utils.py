@@ -66,3 +66,9 @@ def merge_text(input_data):
             except Exception as e:
                 print("Lỗi xử lý:", e)
     return ''.join(fixed_parts)
+
+def check_path_startswith(path, arr):
+    for item in arr:
+        if path.startswith(item):
+            return True
+    return False

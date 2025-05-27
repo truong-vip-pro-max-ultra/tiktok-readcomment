@@ -5,6 +5,9 @@ import asyncio
 import random
 import time
 import utils
+import re
+import requests
+
 latest_comments = {}
 latest_actives = {}
 enable_likes = {}
@@ -22,11 +25,32 @@ clients_tasks = {}      # Lưu task chạy client.start()
 love = ['yêu lắm luôn', 'moa moa moa', 'dễ thương quá trời ơi', 'cảm ơn rất nhiều', 'ôi trời ơi']
 
 async def is_live_stream(username):
-    client = TikTokLiveClient(unique_id=username)
-    try:
-        return await client.is_live()
-    except:
-        return False
+    # client = TikTokLiveClient(unique_id=username)
+    # try:
+    #     return await client.is_live()
+    # except:
+    #     return False
+    headers = {
+        "authority": "www.tiktok.com",
+        "method": "GET",
+        "scheme": "https",
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "accept-language": "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
+        "priority": "u=0, i",
+        "sec-ch-ua": '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"macOS"',
+        "sec-fetch-dest": "document",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "none",
+        "sec-fetch-user": "?1",
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+    }
+    url = f'https://www.tiktok.com/@{username.replace("@","")}/live'
+    res = requests.get(url, headers=headers)
+    match = re.search(r'"roomId":"(\d+)"', res.text)
+    return match.group(1) if match else None
 
 def start_client(username):
     if username in clients_threads:
