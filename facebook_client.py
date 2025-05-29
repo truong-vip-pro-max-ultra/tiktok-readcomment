@@ -260,7 +260,7 @@ def start_cleanup_thread_fb(interval=25, timeout_seconds=60):
     thread = threading.Thread(target=run, daemon=True)
     thread.start()
 
-feedback_id = get_feedback_id("https://www.facebook.com/phimtruongtvt/videos/1015017393697161/")
-print(feedback_id)
-cmt = get_new_comment(feedback_id, feedback_id)
-print(cmt)
+# feedback_id = get_feedback_id("https://www.facebook.com/phimtruongtvt/videos/1015017393697161/")
+# print(feedback_id)
+# cmt = get_new_comment(feedback_id, feedback_id)
+# print(cmt)
