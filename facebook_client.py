@@ -39,6 +39,9 @@ def get_feedback_id(url):
     }
     response = requests.get(url, headers=headers)
     feedback_id = utils.cut_string(response.text, ',"feedback":{"id":"', '"')
+    if feedback_id == '':
+        post_id = utils.cut_string(response.text, 'story_fbid%3D', '%26')
+        feedback_id = utils.text_to_base64('feedback:'+post_id)
     return feedback_id
 #
 # def get_new_comment(post_url, feedback_id):
@@ -264,3 +267,6 @@ def start_cleanup_thread_fb(interval=25, timeout_seconds=60):
 # print(feedback_id)
 # cmt = get_new_comment(feedback_id, feedback_id)
 # print(cmt)
+# u = 'https://www.facebook.com/share/v/1AQTUZJT9e/?mibextid=wwXIfr'
+# f = get_feedback_id(u)
+# print(f)

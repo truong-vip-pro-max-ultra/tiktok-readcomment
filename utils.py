@@ -72,3 +72,6 @@ def check_path_startswith(path, arr):
         if path.startswith(item):
             return True
     return False
+
+def text_to_base64(text):
+    return base64.b64encode(text.encode("utf-8")).decode("utf-8")
