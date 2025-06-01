@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, send_file, url_for, abort
+from flask import Flask, request, jsonify, render_template, send_file, url_for, abort, Response
 from tiktok_client import (start_client,
                            get_latest_comment,
                            start_cleanup_thread,
@@ -33,22 +33,32 @@ old_comment_facebook = {}
 
 ALLOWED_ORIGINS = ['https://livestreamvoice.com','http://localhost']
 PATH_ALLOWED_ORIGINS = ['/', '/youtube', '/facebook', '']
-PATH_STARTS_WITH_ORIGINS = ['/tiktok/start', '/facebook/start', '/youtube/start',
+PATH_STARTS_WITH_ORIGINS = ['/tiktok/check', '/facebook/check', '/youtube/check',
+    '/tiktok/start', '/facebook/start', '/youtube/start',
     '/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
     '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/']
 
 @app.before_request
 def block_external_requests():
-    if request.path in PATH_ALLOWED_ORIGINS or utils.check_path_startswith(request.path, PATH_STARTS_WITH_ORIGINS):
+    if request.path in PATH_ALLOWED_ORIGINS or request.path.startswith(tuple(PATH_STARTS_WITH_ORIGINS)):
         return
     origin = request.headers.get('Origin')
     referer = request.headers.get('Referer')
-
     if origin and origin not in ALLOWED_ORIGINS:
         abort(403)
 
     if referer and not referer.startswith(tuple(ALLOWED_ORIGINS)):
         abort(403)
+
+
+@app.route('/robots.txt')
+def robots_txt():
+    robots_content = "User-agent: *\nDisallow:"
+    return Response(robots_content, mimetype='text/plain')
+@app.route('/ads.txt')
+def ads_txt():
+    ads_content = "google.com, pub-5742059082599160, DIRECT, f08c47fec0942fa0"
+    return Response(ads_content, mimetype='text/plain')
 
 @app.errorhandler(404)
 def page_not_found(e):

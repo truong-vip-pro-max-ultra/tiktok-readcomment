@@ -23,6 +23,10 @@
   <meta name="twitter:title" content="Đọc comment livestream Facebook - Công cụ tương tác trực tuyến">
   <meta name="twitter:description" content="Công cụ miễn phí giúp bạn đọc comment từ Facebook Live, tự động phản hồi và gửi lời cảm ơn tới người xem.">
   <meta name="twitter:image" content="https://cdn4.iconfinder.com/data/icons/remains/100/facebook_live_icon-2-512.png">
+  <meta name="keywords" content="facebook, miễn phí, free, chị google đọc bình luận, chị google đọc comment, chị google, đọc comment, đọc bình luận, đọc bình luận livestream, đọc comment livestream, livestream facebook, công cụ livestream miễn phí, phản hồi tự động, auto reply comment facebook live">
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://livestreamvoice.com" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://cdn4.iconfinder.com/data/icons/remains/100/facebook_live_icon-2-512.png">
@@ -39,6 +43,7 @@
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5742059082599160" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-5742059082599160">
 
   <!-- Dữ liệu có cấu trúc (JSON-LD) -->
   <script type="application/ld+json">
@@ -53,7 +58,6 @@
     "image": "https://cdn4.iconfinder.com/data/icons/remains/100/facebook_live_icon-2-512.png"
   }
   </script>
-</head>
     <style>
       /* Gradient động */
       @keyframes gradientShift {
@@ -86,11 +90,6 @@
 
       .btn-modern:hover i {
         transform: translateX(6px) scale(1.2);
-      }
-      @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
       }
 
       .animate-gradient {
@@ -150,6 +149,8 @@
           transform: scale(1.2) rotate(5deg);
         }
     </style>
+</head>
+
 
     <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
 
@@ -201,7 +202,7 @@
 
             <audio id="player" controls autoplay hidden></audio>
 
-           <button id="yt" onclick="copyStreamSourceOBS()"
+           <button aria-label="Copy OBS source for livestream OBS" onclick="copyStreamSourceOBS()"
                     class="btn-copy-obs mt-5 mx-auto">
               <i class="fas fa-copy"></i>
               Copy OBS Source

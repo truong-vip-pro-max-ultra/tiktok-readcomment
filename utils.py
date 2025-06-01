@@ -67,11 +67,6 @@ def merge_text(input_data):
                 print("Lỗi xử lý:", e)
     return ''.join(fixed_parts)
 
-def check_path_startswith(path, arr):
-    for item in arr:
-        if path.startswith(item):
-            return True
-    return False
 
 def text_to_base64(text):
     return base64.b64encode(text.encode("utf-8")).decode("utf-8")
