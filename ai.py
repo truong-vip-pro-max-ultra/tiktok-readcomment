@@ -82,6 +82,7 @@ def copilot_gen_token():
 authorization_copilot = copilot_gen_token()
 
 def copilot(name,comment):
+    raise ValueError
     global authorization_copilot
     thread_id = 'e3937469-c29d-44a6-824a-295a1330f2c3'
     headers_copilot = {
