@@ -15,6 +15,7 @@ from threading import Lock
 import utils
 import asyncio
 import ai
+from functools import wraps
 app = Flask(__name__)
 
 comment_lock_tiktok = Lock()
@@ -37,6 +38,33 @@ PATH_STARTS_WITH_ORIGINS = ['/tiktok/check', '/facebook/check', '/youtube/check'
     '/tiktok/start', '/facebook/start', '/youtube/start',
     '/tiktok/widget/', '/youtube/widget/', '/facebook/widget/',
     '/tiktok/comment/widget/', '/youtube/comment/widget/', '/facebook/comment/widget/']
+
+
+COUNTER_FILE = 'counter.txt'
+
+def read_counter():
+    try:
+        if not os.path.exists(COUNTER_FILE):
+            with open(COUNTER_FILE, 'w') as f:
+                f.write('0')
+        with open(COUNTER_FILE, 'r') as f:
+            return int(f.read())
+    except:
+        return 0
+
+def write_counter(count):
+    with open(COUNTER_FILE, 'w') as f:
+        f.write(str(count))
+
+def count_request(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        count = read_counter()
+        count += 1
+        write_counter(count)
+        return func(*args, **kwargs)
+    return wrapper
+
 
 @app.before_request
 def block_external_requests():
@@ -64,15 +92,19 @@ def ads_txt():
 def page_not_found(e):
     return render_template("tiktok.html")
 @app.route("/")
+@count_request
 def index():
-    return render_template("tiktok.html")
+    return render_template("tiktok.html", counter_requests = read_counter())
 @app.route("/youtube")
+@count_request
 def youtube():
     return render_template("youtube.html")
 @app.route("/facebook")
+@count_request
 def facebook():
     return render_template("facebook.html")
 @app.route("/tiktok/check/<username>", methods=["GET"])
+@count_request
 def check_is_live_stream(username):
     # if not username:
     #     return jsonify({"error": "Missing username"}), 400
@@ -89,6 +121,7 @@ def check_is_live_stream(username):
     return jsonify({"error": f"{username} not live"}), 400
 
 @app.route("/tiktok/start", methods=["POST"])
+@count_request
 def start():
     username = request.json.get("username")
     if not username:
@@ -166,6 +199,7 @@ def tiktok_widget(username):
 
 ## yt
 @app.route("/youtube/check/<url_encode>", methods=["GET"])
+@count_request
 def check_is_live_stream_youtube(url_encode):
     url = utils.base64UrlDecode(url_encode)
     if not url:
@@ -176,6 +210,7 @@ def check_is_live_stream_youtube(url_encode):
     return jsonify({"error": f"{url} not live"}), 400
 
 @app.route("/youtube/start", methods=["POST"])
+@count_request
 def start_youtube():
     username = request.json.get("username")
     if not username:
@@ -261,6 +296,7 @@ def youtube_widget(url_encode):
 
 ## fb
 @app.route("/facebook/check/<url_encode>", methods=["GET"])
+@count_request
 def check_is_live_stream_facebook(url_encode):
     url = utils.base64UrlDecode(url_encode)
     if not url:
@@ -271,6 +307,7 @@ def check_is_live_stream_facebook(url_encode):
     return jsonify({"error": f"{url} not live"}), 400
 
 @app.route("/facebook/start", methods=["POST"])
+@count_request
 def start_facebook():
     username = request.json.get("username")
     if not username:
