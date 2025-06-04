@@ -106,19 +106,19 @@ def facebook():
 @app.route("/tiktok/check/<username>", methods=["GET"])
 @count_request
 def check_is_live_stream(username):
-    # if not username:
-    #     return jsonify({"error": "Missing username"}), 400
-    # check = asyncio.run(is_live_stream(username))
-    # if check:
-    #     return jsonify({"message": f"Started TikTok client for {username}"}), 200
-    # return jsonify({"error": f"{username} not live"}), 400
-
     if not username:
         return jsonify({"error": "Missing username"}), 400
-    check = is_live_stream(username)
+    check = asyncio.run(is_live_stream(username))
     if check:
         return jsonify({"message": f"Started TikTok client for {username}"}), 200
     return jsonify({"error": f"{username} not live"}), 400
+
+    # if not username:
+    #     return jsonify({"error": "Missing username"}), 400
+    # check = is_live_stream(username)
+    # if check:
+    #     return jsonify({"message": f"Started TikTok client for {username}"}), 200
+    # return jsonify({"error": f"{username} not live"}), 400
 
 @app.route("/tiktok/start", methods=["POST"])
 @count_request
