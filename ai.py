@@ -1,7 +1,7 @@
 import requests
 import utils
 from huggingface_hub import InferenceClient
-tk="f_lNPhDRzetAhMOtfnbYPgdagAOazDiSCznX"
+tk="f_CeScVhytElWXfwUAvshRcfYxOgetlNgoKO"
 
 client = InferenceClient(
     api_key='h'+tk
